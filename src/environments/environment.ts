@@ -3,7 +3,25 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  hmr: false,
+  loggers: [
+    {
+      'loggerName': 'console',
+      'loggerLocation': '',
+      'isActive': true
+    },
+    {
+      'loggerName': 'localstorage',
+      'loggerLocation': 'logging',
+      'isActive': false
+    },
+    {
+      'loggerName': 'webapi',
+      'loggerLocation': '/api/log',
+      'isActive': false
+    }
+  ]
 };
 
 /*
