@@ -1,0 +1,53 @@
+<div class="container-fluid p-0" id="pages404">
+  <div *ngIf="imageNumber == 1" id="page-404-3" class="row vertical-center panda-wrapper panda-404">
+
+    <div class="panda-content col align-self-center">
+      <img class="img-fluid logo-pd-2" src="assets/images/not-found/1-panda-404.png" alt="">
+      <h2 class="rs title-404">too fat to reach!</h2>
+      <p class="rs">We cannot reach the page now, please try one of these instead!</p>
+
+      <div id="responsivemenu">
+        <div class="slicknav_menu"><a href="#" aria-haspopup="true" tabindex="0" class="slicknav_btn" style=""><span class="slicknav_menutxt">MENU</span><span class="slicknav_icon"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a>
+          <ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
+            <li><a routerLink="/" role="menuitem" tabindex="-1">home</a></li>
+            <li><a (click)="goBack()" role="menuitem" tabindex="-1">go back</a></li>
+          </ul>
+        </div>
+      </div>
+      <nav class="panda-menu">
+        <ul id="menu" class="rs">
+          <li><a routerLink="/">home</a></li>
+          <li><a href="#" (click)="goBack()">go back</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div *ngIf="imageNumber == 2" id="page-404-1" class="row vertical-center panda-wrapper panda-404">
+    <div class="panda-content page-404 col align-self-center">
+      <header>
+        <div class="logo-pd-404"><img class="img-fluid" src="assets/images/not-found/2-logo-pd-404.png" alt=""></div>
+        <div class="dot"></div>
+        <div class="logo-panda"><img class="img-fluid" src="assets/images/not-found/2-logo-pd.png" alt=""></div>
+      </header>
+      <h2 class="rs title-404">oh, it's gone :(</h2>
+      <p class="rs">Angry Panda has eaten the page you are looking for, please try one of these instead</p>
+      <div class="panda-bg-arrow"></div>
+
+      <div id="responsivemenu">
+        <div class="slicknav_menu"><a href="#" aria-haspopup="true" tabindex="0" class="slicknav_btn" style="outline: none;"><span class="slicknav_menutxt">MENU</span><span class="slicknav_icon"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a>
+          <ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
+            <li><a routerLink="/" role="menuitem" tabindex="-1">home</a></li>
+            <li><a (click)="goBack()" role="menuitem" tabindex="-1">go back</a></li>
+          </ul>
+        </div>
+      </div>
+      <nav class="panda-menu">
+        <ul id="menu" class="rs">
+          <li><a routerLink="/">home</a></li>
+          <li><a href="#" (click)="goBack()">go back</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

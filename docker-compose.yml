@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: mongo:latest
+    container_name: db
+    ports:
+      - "27017:27017"
+    command: --smallfiles
+
+  api:
+    build: ./server
+    container_name: api
+    command: npm start
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - ./server:/usr/src/app

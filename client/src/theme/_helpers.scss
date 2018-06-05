@@ -1,0 +1,88 @@
+/**
+ * helpers styles
+ */
+
+.hidden {
+  display: none;
+}
+
+.faded-text {
+  @include opacity(0.8);
+}
+
+.actions_buttons a,
+.actions_buttons span {
+  color: darkgray;
+  display: inline-block;
+  width: 27px;
+  height: 27px;
+  @include transition(all 0.2s ease-in-out);
+  &:hover {
+    cursor: pointer;
+    color: #0275d8;
+    @include transform(scale(1.2));
+  }
+}
+
+
+/* loader
+-------------------------------------------------- */
+
+$base-line-height: 24px;
+$white: white;
+$off-white: rgba($white, 0.2);
+$spin-duration: 1s;
+$pulse-duration: 750ms;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  border-radius: 50%;
+  width: $base-line-height;
+  height: $base-line-height;
+  border: .25rem solid $off-white;
+  border-top-color: $white;
+  animation: spin $spin-duration infinite linear;
+  margin: auto;
+}
+
+
+/* vertical center div alone
+-------------------------------------------------- */
+
+.vertical-center {
+  min-height: 100%;
+  /* Fallback for vh unit */
+  min-height: 100vh;
+  /* Make it a flex container */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  /* Align the bootstrap's container vertically */
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+
+     Therefore, we should use the following declarations to get it centered again */
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  margin: 0 !important;
+}
