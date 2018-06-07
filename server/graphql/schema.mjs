@@ -1,16 +1,15 @@
-const GraphQL = require('graphql');
-
-const UserType = require('./UserType');
-const User = require('./../models/user.model');
-const {
+import { 
   GraphQLObjectType,
   GraphQLString,
-  GraphQLSchema
-} = GraphQL;
+  GraphQLSchema 
+} from 'graphql';
+
+import { UserType } from "./UserType";
+import { User } from '../models';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
-  fields: {
+  fields: () => {[{
     user: {
       type: UserType,
       args: {
@@ -22,9 +21,15 @@ const RootQuery = new GraphQLObjectType({
         return User.findById(args.id);
       }
     }
-  }
+  }]}
 });
 
-module.exports = new GraphQLSchema({
+// module.exports = new GraphQLSchema({
+//   query: RootQuery
+// });
+
+const schema = new GraphQLSchema({
   query: RootQuery
 });
+
+export { schema };
