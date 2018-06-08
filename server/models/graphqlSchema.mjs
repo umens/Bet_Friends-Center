@@ -11,4 +11,4 @@ schemaComposer.schemaComposer.rootQuery().addFields(rootQuery);
 schemaComposer.schemaComposer.rootMutation().addFields(rootMutation);
 
 const graphqlSchema = schemaComposer.schemaComposer.buildSchema();
-export {default} graphqlSchema;
+export { graphqlSchema };

@@ -1,11 +1,14 @@
 import Mongoose from 'mongoose';
 import composeWithMongoose from 'graphql-compose-mongoose';
+import bcrypt from 'bcrypt';
+
+import { HashPassword } from "../services";
 
 const customizationOptions = {};
 
 // STEP 1: DEFINE MONGOOSE SCHEMA AND MODEL
 const UserSchema = new Mongoose.Schema({
-  usermane: {
+  username: {
     type: String,
     index: true,
   },
@@ -13,8 +16,49 @@ const UserSchema = new Mongoose.Schema({
     type: String,
     index: true,
   },
+  admin: Boolean,
   password: String,
   picture: String,
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now()
+  },
+});
+
+UserSchema.methods.comparePassword = async function (candidatePassword, cb) {
+  try {
+    const match = await bcrypt.compare(candidatePassword, this.password);
+  } catch (err) {
+    throw
+  }
+  return match;
+  // bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+  //   if (err) {
+  //     return cb(err);
+  //   }
+  //   cb(null, isMatch);
+  // });
+};
+
+UserSchema.pre('save', async function () {
+  await HashPassword();
+});
+
+UserSchema.pre('findOneAndUpdate', async function (next) {
+  if (!this.isModified("password")) {
+    await HashPassword();
+  }
+  await function () {
+    return this.update({}, {
+      $set: {
+        updatedAt: new Date()
+      }
+    });
+  };
 });
 
 const User = Mongoose.model('User', UserSchema);
@@ -42,7 +86,5 @@ const UserRootMutation = {
   userRemoveOne: UserTC.getResolver('removeOne'),
   userRemoveMany: UserTC.getResolver('removeMany'),
 };
-
-// module.exports = Mongoose.model('User', UserSchema);
 
 export { User, UserTC, UserRootQuery, UserRootMutation };
