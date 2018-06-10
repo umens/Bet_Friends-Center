@@ -2,22 +2,38 @@ import Mongoose from 'mongoose';
 import composeWithMongoose from 'graphql-compose-mongoose';
 import bcrypt from 'bcrypt';
 
-import { HashPassword } from "../services";
+import {
+  HashPassword
+} from "../services";
 
 const customizationOptions = {};
 
 // STEP 1: DEFINE MONGOOSE SCHEMA AND MODEL
 const UserSchema = new Mongoose.Schema({
-  username: {
-    type: String,
-    index: true,
-  },
+  firstname: String,
+  lastname: String,
   email: {
     type: String,
     index: true,
+    unique: true,
+    required: true
   },
-  admin: Boolean,
-  password: String,
+  // here we defines the user role like admin, customer, etc..
+  scope: {
+    type: String,
+    enum: ['User', 'Admin'],
+    required: true
+  },
+  //it tells about the user account/email verification. By default it is false which is not verified and changes to true when account/email gets verified
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  // hashed password is saved
+  password: {
+    type: String,
+    required: true
+  },
   picture: String,
   createdAt: {
     type: Date,
@@ -29,30 +45,29 @@ const UserSchema = new Mongoose.Schema({
   },
 });
 
-UserSchema.methods.comparePassword = async function (candidatePassword, cb) {
+UserSchema.methods.comparePassword = async (password) => {
   try {
-    const match = await bcrypt.compare(candidatePassword, this.password);
-  } catch (err) {
-    throw
+    const isMatch = await bcrypt.compare(password, this.password);
+    return isMatch;
+  } catch (error) {
+    return error;
   }
-  return match;
-  // bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-  //   if (err) {
-  //     return cb(err);
-  //   }
-  //   cb(null, isMatch);
-  // });
 };
 
-UserSchema.pre('save', async function () {
-  await HashPassword();
+UserSchema.virtual('fullName').get(function () {
+  return this.firstname + ' ' + this.lastname;
 });
 
-UserSchema.pre('findOneAndUpdate', async function (next) {
-  if (!this.isModified("password")) {
-    await HashPassword();
+UserSchema.pre('save', async function () {
+  await HashPassword(this);
+});
+
+UserSchema.pre('findOneAndUpdate', async function () {
+  if (this.isModified("password")) {
+    await HashPassword(this);
   }
-  await function () {
+  await
+  function () {
     return this.update({}, {
       $set: {
         updatedAt: new Date()
@@ -65,6 +80,21 @@ const User = Mongoose.model('User', UserSchema);
 
 // STEP 2: CONVERT MONGOOSE MODEL TO GraphQL PIECES
 const UserTC = composeWithMongoose.composeWithMongoose(User, customizationOptions);
+
+// add specific hooks
+UserTC.wrapResolverResolve('updateById', next => async rp => {
+
+  // extend resolve params with hook
+  rp.beforeRecordMutate = async (doc, resolveParams) => {
+    if (doc.isModified("password")) {
+      await HashPassword(doc);
+    }
+    doc.updatedAt = new Date();
+    return doc;
+  };
+
+  return next(rp);
+});
 
 // STEP 3: CREATE CRAZY GraphQL SCHEMA WITH ALL CRUD USER OPERATIONS
 const UserRootQuery = {
@@ -87,4 +117,9 @@ const UserRootMutation = {
   userRemoveMany: UserTC.getResolver('removeMany'),
 };
 
-export { User, UserTC, UserRootQuery, UserRootMutation };
+export {
+  User,
+  UserTC,
+  UserRootQuery,
+  UserRootMutation
+};

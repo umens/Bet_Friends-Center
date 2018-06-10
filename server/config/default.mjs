@@ -2,7 +2,7 @@
 import Pkg from '../package';
 import graphql from 'apollo-server-hapi';
 
-import * as graphqlSchema from '../models';
+import * as Models from '../models';
 
 export const ConfigServer = {
   server: {
@@ -46,11 +46,12 @@ export const ConfigServer = {
         options: {
           path: '/graphql',
           graphqlOptions: {
-            schema: graphqlSchema.graphqlSchema
+            schema: Models.graphqlSchema
+          },
+          route: {
+            cors: true,
+            auth: false
           }
-        },
-        route: {
-          cors: true
         }
       },
       {
@@ -59,10 +60,11 @@ export const ConfigServer = {
           path: '/graphiql',
           graphiqlOptions: {
             endpointURL: '/graphql'
+          },
+          route: {
+            cors: true,
+            auth: false
           }
-        },
-        route: {
-          cors: true
         }
       },
       {
@@ -125,8 +127,6 @@ export const ConfigDB = {
 }
 
 export const ConfigAuth = {
-  uri: "mongodb://localhost:27017/api-bet-friend-center",
-  options: {
-    autoReconnect: true
-  }
+  "saltFactor": 10,
+  "secretKey": "ChangeThisSecret"
 }

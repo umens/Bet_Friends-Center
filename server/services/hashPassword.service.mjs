@@ -1,34 +1,22 @@
 import bcrypt from 'bcrypt';
+import { ConfigAuth } from '../config/default';
 
-async function HashPassword(next) {
+async function HashPassword(ctx) {
 
   try {
-    const hash = await bcrypt.hashAsync(this.password, 16.5);
+    let user = (ctx.op === 'update') ? ctx._update.$set : ctx;
+    if (!user || !user.password || user.password.length === 60) {
+      return new Error('Un problème est survenu lors du hash');
+    }
+    const hash = await bcrypt.hash(ctx.password, ConfigAuth.saltFactor);
 
-    this.password = hash;
-    next();
+    ctx.password = hash;
+    return Promise.resolve();
 
   } catch (err) {
-    next(err);
+    return err
   }
-
-
-  let user = (this.op === 'update') ? this._update.$set : this;
-  if (!user || !user.password || user.password.length === 60) {
-    throw new Error('Can\'t hash password');
-  }
-  Bcrypt.genSalt(Config.get('server.auth.saltFactor'), (err, salt) => {
-    if (err) {
-      throw new Error(err)
-    }
-    Bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) {
-        return next(err);
-      }
-      user.password = hash;
-      next();
-    });
-  });
+  
 };
 
 export { HashPassword };

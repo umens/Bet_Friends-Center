@@ -1,27 +1,30 @@
-'use strict';
-const Mongoose = require('mongoose');
-const Boom = require('boom');
-const User = Models.User
+import * as Models from '../models';
+import jwt from 'jsonwebtoken';
 
-module.exports = async (decoded, request) => {
-    jwt.verify(request.headers.authorization, Config.get('server.auth.secretKey'), (err, decoded) => {
-        if (typeof decoded === 'undefined') {
-            return {
-                isValid: false
-            };
-        }
-        User.findOne({
-            _id: decoded.iduser
-        }).exec((err, currentUser) => {
-            if (!currentUser || err) {
-                return {
-                    isValid: false
-                };
-            }
-            request.currentUser = currentUser;
-            return {
-                isValid: true
-            };
-        });
-    });
+export async function validate(decoded, request, h) {
+
+  if (typeof decoded === 'undefined') {
+    return {
+      isValid: false
+    };
+  }
+
+  return Models.User.findOne({
+    _id: decoded._id
+  }).exec().then((currentUser) => {
+
+    if (!currentUser) return {
+      isValid: false
+    };
+    
+    return {
+      isValid: true
+    };
+  }).catch((err) => {
+
+    return {
+      isValid: false
+    };
+
+  });
 };
