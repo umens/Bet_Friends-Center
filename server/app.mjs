@@ -9,17 +9,20 @@ import {
   ConfigServer,
   ConfigDB
 } from './config/default';
+import dotenv from 'dotenv';
 
 const init = async () => {
 
   try {
+
+    await dotenv.config();
 
     const server = await Glue.compose(ConfigServer, {});
 
     Database.connect(ConfigDB, server);
 
     await Utils.addPolicies(server);
-    
+
     await Utils.addRoute(server);
 
     await server.start();

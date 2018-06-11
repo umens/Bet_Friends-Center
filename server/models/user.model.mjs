@@ -1,12 +1,17 @@
 import Mongoose from 'mongoose';
 import composeWithMongoose from 'graphql-compose-mongoose';
+import mongoose_delete from 'mongoose-delete';
 import bcrypt from 'bcrypt';
 
 import {
   HashPassword
 } from "../services";
 
-const customizationOptions = {};
+const customizationOptions = {
+  fields: {
+    remove: ['updatedAt', 'createdAt', 'deleted', 'deletedAt', 'deletedBy', 'password', 'scope', 'isVerified'],
+  },
+};
 
 // STEP 1: DEFINE MONGOOSE SCHEMA AND MODEL
 const UserSchema = new Mongoose.Schema({
@@ -22,7 +27,8 @@ const UserSchema = new Mongoose.Schema({
   scope: {
     type: String,
     enum: ['User', 'Admin'],
-    required: true
+    required: true,
+    default: 'User'
   },
   //it tells about the user account/email verification. By default it is false which is not verified and changes to true when account/email gets verified
   isVerified: {
@@ -35,17 +41,19 @@ const UserSchema = new Mongoose.Schema({
     required: true
   },
   picture: String,
-  createdAt: {
-    type: Date,
-    default: Date.now()
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now()
-  },
-});
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now()
+  // },
+  // updatedAt: {
+  //   type: Date,
+  //   default: Date.now()
+  // },
+}, { timestamps: true });
 
-UserSchema.methods.comparePassword = async (password) => {
+UserSchema.plugin(mongoose_delete, { overrideMethods: true, deletedAt: true, deletedBy: true });
+
+UserSchema.methods.comparePassword = async function (password) {
   try {
     const isMatch = await bcrypt.compare(password, this.password);
     return isMatch;
@@ -54,27 +62,54 @@ UserSchema.methods.comparePassword = async (password) => {
   }
 };
 
-UserSchema.virtual('fullName').get(function () {
+UserSchema.virtual('fullname').get(function () {
   return this.firstname + ' ' + this.lastname;
 });
 
 UserSchema.pre('save', async function () {
-  await HashPassword(this);
+  try {
+    if (this.isModified("password")) {
+      await HashPassword(this);
+    }
+  } catch (error) {
+    return error
+  }
+
+  // this.updatedAt = new Date();
 });
 
 UserSchema.pre('findOneAndUpdate', async function () {
+  // console.log(this)
   if (this.isModified("password")) {
     await HashPassword(this);
   }
-  await
-  function () {
-    return this.update({}, {
-      $set: {
-        updatedAt: new Date()
-      }
-    });
-  };
 });
+
+// UserSchema.pre('findOneAndUpdate', async function preFindOneAndUpdate(next) {
+//   try {
+//     const user = this;
+
+//     // only hash the password if it has been modified (or is new)
+//     if (user.isModified('password')) {
+//       // hash the password along with our new salt
+//       const hash = await HashPassword(user);
+//       // override the cleartext password with the hashed one
+//       user.password = hash;
+//     }
+
+//     // user.updatedAt = new Date();
+//     await function () {
+//       return this.update({}, {
+//         $set: {
+//           updatedAt: new Date()
+//         }
+//       });
+//     };
+//     return next();
+//   } catch (e) {
+//     return next(e);
+//   }
+// });
 
 const User = Mongoose.model('User', UserSchema);
 
@@ -89,7 +124,7 @@ UserTC.wrapResolverResolve('updateById', next => async rp => {
     if (doc.isModified("password")) {
       await HashPassword(doc);
     }
-    doc.updatedAt = new Date();
+    // doc.updatedAt = new Date();
     return doc;
   };
 
@@ -108,7 +143,7 @@ const UserRootQuery = {
 };
 
 const UserRootMutation = {
-  userCreate: UserTC.getResolver('createOne'),
+  // userCreate: UserTC.getResolver('createOne'),
   userUpdateById: UserTC.getResolver('updateById'),
   userUpdateOne: UserTC.getResolver('updateOne'),
   userUpdateMany: UserTC.getResolver('updateMany'),

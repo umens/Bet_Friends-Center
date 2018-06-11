@@ -130,3 +130,11 @@ export const ConfigAuth = {
   "saltFactor": 10,
   "secretKey": "ChangeThisSecret"
 }
+
+export const ConfigMailer = {
+  service: "",
+  auth: {
+    user: "",
+    password: "!"
+  }
+}

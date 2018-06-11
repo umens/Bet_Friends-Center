@@ -12,11 +12,11 @@ export async function validate(decoded, request, h) {
 
   return Models.User.findOne({
     _id: decoded._id,
-    admin: true
+    scope: 'Admin'
   }).exec().then((currentUser) => {
 
     if (!currentUser) return Boom.unauthorized('You must be admin user');
-    
+
     return {
       isValid: true
     };
@@ -27,4 +27,27 @@ export async function validate(decoded, request, h) {
     };
 
   });
+
+  // try {
+  //   if (typeof decoded === 'undefined') {
+  //     return {
+  //       isValid: false
+  //     };
+  //   }
+
+  //   const currentUser = await Models.User.findOne({
+  //     _id: decoded._id,
+  //     scope: 'Admin'
+  //   });
+
+  //   if (!currentUser) return Boom.unauthorized('You must be admin user');
+
+  //   return {
+  //     isValid: true
+  //   };
+  // } catch (error) {
+  //   return {
+  //     isValid: false
+  //   };
+  // }
 };

@@ -13,10 +13,13 @@ async function HashPassword(ctx) {
     ctx.password = hash;
     return Promise.resolve();
 
+    // ctx.password = hash;
+    // return hash;
+
   } catch (err) {
     return err
   }
-  
+
 };
 
 export { HashPassword };
