@@ -1,5 +1,4 @@
 import * as Models from '../models';
-import jwt from 'jsonwebtoken';
 
 export async function validate(decoded, request, h) {
 
@@ -21,10 +20,10 @@ export async function validate(decoded, request, h) {
       isValid: true
     };
   }).catch((err) => {
-
-    return {
-      isValid: false
-    };
+    return err;
+    // return {
+    //   isValid: false
+    // };
 
   });
 };

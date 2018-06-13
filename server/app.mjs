@@ -10,6 +10,7 @@ import {
   ConfigDB
 } from './config/default';
 import dotenv from 'dotenv';
+import{ JobsConsumer } from "./workers";
 
 const init = async () => {
 
@@ -26,6 +27,8 @@ const init = async () => {
     await Utils.addRoute(server);
 
     await server.start();
+
+    // await JobsConsumer.run();
 
     server.log(['start', 'server'], chalk.green(`Server running at ${server.info.uri}`));
   } catch (err) {

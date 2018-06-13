@@ -1,8 +1,12 @@
 'use strict'
 import Pkg from '../package';
 import graphql from 'apollo-server-hapi';
+import Agenda from 'agenda';
+import Agendash from 'agendash';
 
 import * as Models from '../models';
+
+const agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/'}});
 
 export const ConfigServer = {
   server: {
@@ -114,13 +118,25 @@ export const ConfigServer = {
           }
         }
       },
-      'hapi-auth-jwt2'
+      'hapi-auth-jwt2',
+      // {
+      //   plugin: Agendash(agenda, {
+      //     middleware: 'hapi',
+      //     // can place other options (e.g. title) here
+      //   }),
+      //   options: {},
+      //   routes: {
+      //     prefix: '/agendash'
+      //   }
+      // }
     ]
   }
 }
 
 export const ConfigDB = {
-  uri: "mongodb://localhost:27017/api-bet-friend-center",
+  uri: "mongodb://localhost:27017/",
+  DBName: "api-bet-friend-center",
+  jobDBName: "jobsAgenda",
   options: {
     autoReconnect: true
   }

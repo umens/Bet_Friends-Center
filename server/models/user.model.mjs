@@ -2,6 +2,9 @@ import Mongoose from 'mongoose';
 import composeWithMongoose from 'graphql-compose-mongoose';
 import mongoose_delete from 'mongoose-delete';
 import bcrypt from 'bcrypt';
+import {
+  CompetitionTC
+} from './competition.model';
 
 import {
   HashPassword
@@ -40,18 +43,23 @@ const UserSchema = new Mongoose.Schema({
     type: String,
     required: true
   },
-  picture: String,
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now()
-  // },
-  // updatedAt: {
-  //   type: Date,
-  //   default: Date.now()
-  // },
-}, { timestamps: true });
+  picture: {
+    type: String,
+    default: null
+  },
+  competitions: [{
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Competition'
+  }],
+}, {
+  timestamps: true
+});
 
-UserSchema.plugin(mongoose_delete, { overrideMethods: true, deletedAt: true, deletedBy: true });
+UserSchema.plugin(mongoose_delete, {
+  overrideMethods: true,
+  deletedAt: true,
+  deletedBy: true
+});
 
 UserSchema.methods.comparePassword = async function (password) {
   try {
@@ -74,8 +82,6 @@ UserSchema.pre('save', async function () {
   } catch (error) {
     return error
   }
-
-  // this.updatedAt = new Date();
 });
 
 UserSchema.pre('findOneAndUpdate', async function () {
@@ -84,32 +90,6 @@ UserSchema.pre('findOneAndUpdate', async function () {
     await HashPassword(this);
   }
 });
-
-// UserSchema.pre('findOneAndUpdate', async function preFindOneAndUpdate(next) {
-//   try {
-//     const user = this;
-
-//     // only hash the password if it has been modified (or is new)
-//     if (user.isModified('password')) {
-//       // hash the password along with our new salt
-//       const hash = await HashPassword(user);
-//       // override the cleartext password with the hashed one
-//       user.password = hash;
-//     }
-
-//     // user.updatedAt = new Date();
-//     await function () {
-//       return this.update({}, {
-//         $set: {
-//           updatedAt: new Date()
-//         }
-//       });
-//     };
-//     return next();
-//   } catch (e) {
-//     return next(e);
-//   }
-// });
 
 const User = Mongoose.model('User', UserSchema);
 
@@ -130,6 +110,19 @@ UserTC.wrapResolverResolve('updateById', next => async rp => {
 
   return next(rp);
 });
+
+// add relations
+UserTC.addRelation(
+  'competitions', {
+    resolver: () => CompetitionTC.getResolver('findByIds'),
+    prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
+      _ids: (source) => source.competitions,
+    },
+    projection: {
+      competitions: 1
+    }, // point fields in source object, which should be fetched from DB
+  }
+);
 
 // STEP 3: CREATE CRAZY GraphQL SCHEMA WITH ALL CRUD USER OPERATIONS
 const UserRootQuery = {

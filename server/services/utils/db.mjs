@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const Database = {
 
   connect: (dbConfig, server) => {
-    mongoose.connect(dbConfig.uri, dbConfig.options);
+    mongoose.connect(dbConfig.uri + dbConfig.DBName, dbConfig.options);
 
     mongoose.connection.on('connecting', () => {
       // console.info(chalk.blue('connecting to MongoDB...'));
@@ -20,8 +20,8 @@ const Database = {
     });
 
     mongoose.connection.on('connected', () => {
-      // console.log(chalk.green('Connection DB ok', dbConfig.uri));
-      server.log(['database', 'connection'], chalk.green('Connection DB ok', dbConfig.uri));
+      // console.log(chalk.green('Connection DB ok', dbConfig.uri + dbConfig.DBName));
+      server.log(['database', 'connection'], chalk.green('Connection DB ok', dbConfig.uri + dbConfig.DBName));
     });
 
     mongoose.connection.once('open', function () {
@@ -39,7 +39,7 @@ const Database = {
       server.log(['warn', 'database', 'connection'], chalk.yellow('Connection DB lost'));
 
       setTimeout(() => {
-        mongoose.connect(dbConfig.uri, dbConfig.options);
+        mongoose.connect(dbConfig.uri + dbConfig.DBName, dbConfig.options);
         // console.info(chalk.blue('DB reconnection'));
         server.log(['info', 'database', 'connection'], chalk.blue('DB reconnection'));
       }, 15000);

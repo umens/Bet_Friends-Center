@@ -1,12 +1,9 @@
 import fs from 'fs';
-import Path from 'path';
-import Mongoose from 'mongoose';
 import path from 'path';
 import { ConfigAuth } from '../../config/default';
 import expose from './expose.js';
 const {__dirname} = expose;
 import { AdminPolicy, DefaultPolicy } from '../../policies';
-import jwt from 'jsonwebtoken';
 import { BaseRoutes, AuthRoutes } from '../../routes';
 
 const Utils = {
@@ -14,13 +11,13 @@ const Utils = {
         path = path[path.length - 1] !== '/' ? path + '/' : path;
         let files = [];
         try {
-            files = fs.readdirSync(Path.resolve(__dirname, '../..', path));
+            files = fs.readdirSync(path.resolve(__dirname, '../..', path));
         } catch (e) {
             console.log(e);
             process.exit();
         }
         return files.map((file) => {
-            return Path.resolve(__dirname, '../..', path, file)
+            return path.resolve(__dirname, '../..', path, file)
         });
     },
 
