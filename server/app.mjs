@@ -1,4 +1,3 @@
-import Hapi from 'hapi';
 import Glue from 'glue';
 import chalk from 'chalk';
 import {
@@ -10,7 +9,7 @@ import {
   ConfigDB
 } from './config/default';
 import dotenv from 'dotenv';
-import{ JobsConsumer } from "./workers";
+import{ JobsConsumer, JobsProducer } from "./workers";
 
 const init = async () => {
 
@@ -28,7 +27,8 @@ const init = async () => {
 
     await server.start();
 
-    // await JobsConsumer.run();
+    await JobsConsumer.run();
+    await JobsProducer.run();
 
     server.log(['start', 'server'], chalk.green(`Server running at ${server.info.uri}`));
   } catch (err) {

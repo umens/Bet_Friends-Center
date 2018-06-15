@@ -23,8 +23,14 @@ const TeamSchema = new Mongoose.Schema({
     unique: true,
     required: true
   },
+  apiRef: {
+    type: Number,
+    index: true,
+    unique: true,
+    required: true
+  },
   logo: String,
-  seasons: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'Season', required: true }],
+  // seasons: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'Season', required: true }],
 }, { timestamps: true });
 
 TeamSchema.plugin(mongoose_delete, { overrideMethods: true, deletedAt: true, deletedBy: true });
@@ -35,17 +41,17 @@ const Team = Mongoose.model('Team', TeamSchema);
 const TeamTC = composeWithMongoose.composeWithMongoose(Team, customizationOptions);
 
 // add relations
-TeamTC.addRelation(
-  'seasons', {
-    resolver: () => SeasonTC.getResolver('findByIds'),
-    prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
-      _ids: (source) => source.seasons,
-    },
-    projection: {
-      seasons: 1
-    }, // point fields in source object, which should be fetched from DB
-  }
-);
+// TeamTC.addRelation(
+//   'seasons', {
+//     resolver: () => SeasonTC.getResolver('findByIds'),
+//     prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
+//       _ids: (source) => source.seasons,
+//     },
+//     projection: {
+//       seasons: 1
+//     }, // point fields in source object, which should be fetched from DB
+//   }
+// );
 
 // STEP 3: CREATE CRAZY GraphQL SCHEMA WITH ALL CRUD TEAM OPERATIONS
 const TeamRootQuery = {

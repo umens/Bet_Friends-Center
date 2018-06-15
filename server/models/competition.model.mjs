@@ -36,8 +36,17 @@ const CompetitionSchema = new Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  season: {
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Season',
+    required: true
+  },
   settings: {
     beforeBeginning: {
+      type: Boolean,
+      default: false
+    },
+    bestBetEnable: {
       type: Boolean,
       default: false
     },

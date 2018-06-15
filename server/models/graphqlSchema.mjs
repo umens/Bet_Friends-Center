@@ -2,7 +2,6 @@ import { UserRootQuery, UserRootMutation } from './user.model';
 import { BetRootQuery, BetRootMutation } from './bet.model';
 import { CompetitionRootQuery, CompetitionRootMutation } from './competition.model';
 import { FixtureRootQuery, FixtureRootMutation } from './fixture.model';
-import { GroupSeasonRootQuery, GroupSeasonRootMutation } from './groupSeason.model';
 import { LeagueRootQuery, LeagueRootMutation } from './league.model';
 import { SeasonRootQuery, SeasonRootMutation } from './season.model';
 import { TeamRootQuery, TeamRootMutation } from './team.model';
@@ -26,10 +25,6 @@ Object.assign(rootMutation, CompetitionRootMutation);
 // Fixture methods
 Object.assign(rootQuery, FixtureRootQuery);
 Object.assign(rootMutation, FixtureRootMutation);
-
-// GroupSeason methods
-Object.assign(rootQuery, GroupSeasonRootQuery);
-Object.assign(rootMutation, GroupSeasonRootMutation);
 
 // League methods
 Object.assign(rootQuery, LeagueRootQuery);

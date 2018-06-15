@@ -1,20 +1,27 @@
 import Joi from 'joi';
 import Boom from 'boom';
+import * as Models from '../models';
 
 export default [{
     method: "GET",
-    path: "/",
+    path: "/api/v1/currentMatchDay",
     handler: async (request, h) => {
       try {
-        return h.response({
-          text: 'Token not required'
-        });
+        var competitionsMatchday = [];
+        const competitions = await Models.Competition.find({ players: request.auth.credentials._id }).populate('season');
+        for (const competition of competitions) {
+          const fixtures = await Models.Fixture.find({ matchDay: competition.season.currentMatchDay, season: competition.season._id })
+            .populate('homeTeam')
+            .populate('awayTeam');
+          competitionsMatchday.push(Object.assign(competition.toJSON(), { fixtures: fixtures.map(function (f) { return f.toJSON() }) }))
+        }
+        return h.response(competitionsMatchday);
       } catch (err) {
         throw Boom.badRequest(err);
       }
     },
     options: {
-      auth: false
+      auth: 'default'
     }
 
   },

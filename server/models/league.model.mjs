@@ -17,6 +17,17 @@ const LeagueSchema = new Mongoose.Schema({
     type: String,
     required: true 
   },
+  code: {
+    type: String,
+    index: true,
+    unique: true,
+    required: true
+  },
+  haveGroup: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   seasons: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'Season' }]
 }, { timestamps: true });
 

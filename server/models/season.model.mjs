@@ -29,6 +29,46 @@ const SeasonSchema = new Mongoose.Schema({
     required: true,
     default: 'SCHEDULED'
   },
+  apiRef: {
+    type: Number,
+    index: true,
+    unique: true,
+    required: true
+  },
+  currentMatchDay: {
+    type: Number,
+    required: true,
+    default: 1
+  },
+  groups: [{
+    label: {
+      type: String,
+      required: true
+    },
+    teams: [{
+      team: { type: Mongoose.Schema.Types.ObjectId, ref: 'Team', required: true },
+      rank: {
+        type: Number,
+        default: 0
+      },
+      points: {
+        type: Number,
+        default: 0
+      },
+      goals: {
+        type: Number,
+        default: 0
+      },
+      goalsAgainst: {
+        type: Number,
+        default: 0
+      },
+      playedGames: {
+        type: Number,
+        default: 0
+      }
+    }]
+  }], 
   league: { type: Mongoose.Schema.Types.ObjectId, ref: 'League', required: true },
 }, { timestamps: true });
 

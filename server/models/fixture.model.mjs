@@ -42,6 +42,12 @@ const FixtureSchema = new Mongoose.Schema({
       default: null,
     },
   },
+  apiRef: {
+    type: Number,
+    index: true,
+    unique: true,
+    required: true
+  },
   odds: {
     type: String,
     default: null,
