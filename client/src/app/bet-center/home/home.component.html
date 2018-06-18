@@ -1,10 +1,20 @@
-<div class="container-fluid">
-  <div class="jumbotron text-center">
-    <h1>
-      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo"/>
-      <span translate>Hello world !</span>
-    </h1>
+<div class="row" [hidden]="!isLoading">
+  <div class="col-md-12">
     <app-loader [isLoading]="isLoading"></app-loader>
-    <q [hidden]="isLoading">{{ quote }}</q>
+  </div>
+</div>
+<div class="row mt-3" [hidden]="isLoading">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let pool of pools">
+          <a routerLink="/pool/{{ pool.id }}">
+            <span class="text-capitalize">
+              {{ pool.label }}
+              <small class="text-muted text-capitalize">{{ pool.season.label }}</small>
+            </span>
+          </a>
+        <span *ngIf="this.CountCurrentGamesLeftToBet(pool.fixtures) > 0" class="badge badge-primary badge-pill">{{ this.CountCurrentGamesLeftToBet(pool.fixtures) }}</span>
+      </li>
+    </ul>
   </div>
 </div>

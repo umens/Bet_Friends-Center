@@ -1,6 +1,6 @@
 import { UserRootQuery, UserRootMutation } from './user.model';
 import { BetRootQuery, BetRootMutation } from './bet.model';
-import { CompetitionRootQuery, CompetitionRootMutation } from './competition.model';
+import { PoolRootQuery, PoolRootMutation } from './pool.model';
 import { FixtureRootQuery, FixtureRootMutation } from './fixture.model';
 import { LeagueRootQuery, LeagueRootMutation } from './league.model';
 import { SeasonRootQuery, SeasonRootMutation } from './season.model';
@@ -18,9 +18,9 @@ Object.assign(rootMutation, UserRootMutation);
 Object.assign(rootQuery, BetRootQuery);
 Object.assign(rootMutation, BetRootMutation);
 
-// Competition methods
-Object.assign(rootQuery, CompetitionRootQuery);
-Object.assign(rootMutation, CompetitionRootMutation);
+// Pool methods
+Object.assign(rootQuery, PoolRootQuery);
+Object.assign(rootMutation, PoolRootMutation);
 
 // Fixture methods
 Object.assign(rootQuery, FixtureRootQuery);

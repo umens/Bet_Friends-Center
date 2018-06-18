@@ -45,25 +45,25 @@ describe('LoaderComponent', () => {
     expect(div.getAttribute('hidden')).toBeNull();
   });
 
-  it('should not display a message by default', () => {
+  it('should display Loading... by default', () => {
     // Arrange
     const element = fixture.nativeElement;
-    const span = element.querySelectorAll('span')[0];
+    const span = element.querySelectorAll('p')[0];
 
     // Assert
-    expect(span.innerText).toBe('');
+    expect(span.innerText).toBe('Loading...');
   });
 
   it('should display specified message', () => {
     // Arrange
     const element = fixture.nativeElement;
-    const span = element.querySelectorAll('span')[0];
+    const span = element.querySelectorAll('p')[0];
 
     // Act
     fixture.componentInstance.message = 'testing';
     fixture.detectChanges();
 
     // Assert
-    expect(span.innerText).toBe('testing');
+    expect(span.innerText).toBe('testing...');
   });
 });

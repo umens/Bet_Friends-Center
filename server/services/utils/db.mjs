@@ -1,5 +1,8 @@
 import chalk from 'chalk';
 import mongoose from "mongoose";
+import toJson from '@meanie/mongoose-to-json';
+
+mongoose.plugin(toJson);
 
 const Database = {
 

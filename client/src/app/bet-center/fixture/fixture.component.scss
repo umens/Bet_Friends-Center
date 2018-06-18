@@ -1,0 +1,35 @@
+.statsfc-next-fixture {
+  background: #F8F8F8;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+div.sfc_nextfixture table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  td {
+    text-align: center !important;
+    padding: 2px 5px;
+    vertical-align: middle;
+  }
+}
+
+div.sfc_nextfixture table td span.sfc_team {
+  font-size: small;
+  position: relative;
+}
+
+div.sfc_nextfixture table td span.sfc_competition {
+  font-size: small;
+  font-weight: bold;
+}
+
+div.sfc_nextfixture table td span.sfc_date {
+  font-weight: bold;
+}
+
+div.sfc_nextfixture table td.sfc_home, div.sfc_nextfixture table td.sfc_away {
+  width: 25%;
+}

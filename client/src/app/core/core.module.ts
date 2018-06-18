@@ -20,6 +20,7 @@ import { CacheInterceptor } from './http/cache.interceptor';
 import { NotificationService } from './notification.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FooterComponent } from './shell/footer/footer.component';
+import { TokenInterceptor } from './http/token.interceptor';
 
 @NgModule({
   imports: [
@@ -51,6 +52,11 @@ import { FooterComponent } from './shell/footer/footer.component';
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
     },
     NotificationService,
   ]

@@ -25,7 +25,7 @@ const SeasonSchema = new Mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['SCHEDULED', 'IN_PROGRESS', 'FINNISHED'],
+    enum: ['SCHEDULED', 'IN_PROGRESS', 'FINISHED'],
     required: true,
     default: 'SCHEDULED'
   },

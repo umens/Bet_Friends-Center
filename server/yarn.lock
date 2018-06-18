@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@meanie/mongoose-to-json@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@meanie/mongoose-to-json/-/mongoose-to-json-2.2.0.tgz#f0b380d315e3503c4fe3489c981ff000449d6d31"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"

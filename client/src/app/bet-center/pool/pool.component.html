@@ -1,0 +1,12 @@
+<div class="row" [hidden]="!isLoading">
+  <div class="col-md-12">
+    <app-loader [isLoading]="isLoading"></app-loader>
+  </div>
+</div>
+<div class="row" [hidden]="isLoading">
+  <!-- <div class="col-12"> -->
+    <!-- <div class="row"> -->
+      <app-fixture *ngFor="let fixture of pool?.fixtures" [hidden]="fixture.status === 'FINISHED'" [fixture]="fixture"></app-fixture>
+    <!-- </div> -->
+  <!-- </div> -->
+</div>

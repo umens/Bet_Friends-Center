@@ -1,36 +1,75 @@
+import Joi from 'joi';
 import {
   AuthController
 } from '../controllers';
 
-export default [
-  Object.assign({
+export default [{
     method: 'POST',
-    path: '/create-account'
+    path: '/create-account',
+    handler: AuthController.createAccount,
+    options: {
+      validate: {
+        payload: {
+          firstname: Joi.string().required(),
+          lastname: Joi.string().required(),
+          email: Joi.string().email().required(),
+          password: Joi.string().required()
+        }
+      },
+      auth: false
+    }
   },
-    AuthController.createAccount
-  ),
-  Object.assign({
+  {
     method: 'POST',
-    path: '/login'
+    path: '/login',
+    handler: AuthController.login,
+    options: {
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().required()
+        }
+      },
+      auth: false
+    }
   },
-    AuthController.login
-  ),
-  Object.assign({
+  {
     method: 'GET',
-    path: '/verify-email/{token}'
+    path: '/verify-email/{token}',
+    handler: AuthController.verifyEmail,
+    options: {
+      validate: {
+        params: {
+          token: Joi.string().required()
+        }
+      },
+      auth: false
+    }
   },
-    AuthController.verifyEmail
-  ),
-  Object.assign({
+  {
     method: 'POST',
-    path: '/forgot-password'
+    path: '/forgot-password',
+    handler: AuthController.forgotPassword,
+    options: {
+      validate: {
+        payload: {
+          email: Joi.string().email().required()
+        }
+      },
+      auth: false
+    }
   },
-    AuthController.forgotPassword
-  ),
-  Object.assign({
+  {
     method: 'POST',
-    path: '/resend-verification-email'
+    path: '/resend-verification-email',
+    handler: AuthController.resendVerificationEmail,
+    options: {
+      validate: {
+        payload: {
+          email: Joi.string().email().required()
+        }
+      },
+      auth: false
+    }
   },
-    AuthController.resendVerificationEmail
-  ),
 ]

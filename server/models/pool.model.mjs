@@ -12,7 +12,7 @@ const customizationOptions = {
 };
 
 // STEP 1: DEFINE MONGOOSE SCHEMA AND MODEL
-const CompetitionSchema = new Mongoose.Schema({
+const PoolSchema = new Mongoose.Schema({
   label: {
     type: String,
     required: true
@@ -23,7 +23,7 @@ const CompetitionSchema = new Mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['SCHEDULED', 'IN_PROGRESS', 'FINNISHED'],
+    enum: ['SCHEDULED', 'IN_PROGRESS', 'FINISHED'],
     required: true,
     default: 'SCHEDULED'
   },
@@ -71,19 +71,19 @@ const CompetitionSchema = new Mongoose.Schema({
   timestamps: true
 });
 
-CompetitionSchema.plugin(mongoose_delete, {
+PoolSchema.plugin(mongoose_delete, {
   overrideMethods: true,
   deletedAt: true,
   deletedBy: true
 });
 
-const Competition = Mongoose.model('Competition', CompetitionSchema);
+const Pool = Mongoose.model('Pool', PoolSchema);
 
 // STEP 2: CONVERT MONGOOSE MODEL TO GraphQL PIECES
-const CompetitionTC = composeWithMongoose.composeWithMongoose(Competition, customizationOptions);
+const PoolTC = composeWithMongoose.composeWithMongoose(Pool, customizationOptions);
 
 // add relations
-CompetitionTC.addRelation(
+PoolTC.addRelation(
   'commissioner', {
     resolver: () => UserTC.getResolver('findById'),
     prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
@@ -94,7 +94,7 @@ CompetitionTC.addRelation(
     }, // point fields in source object, which should be fetched from DB
   }
 );
-CompetitionTC.addRelation(
+PoolTC.addRelation(
   'players', {
     resolver: () => UserTC.getResolver('findByIds'),
     prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
@@ -106,30 +106,30 @@ CompetitionTC.addRelation(
   }
 );
 
-// STEP 3: CREATE CRAZY GraphQL SCHEMA WITH ALL CRUD COMPETITION OPERATIONS
-const CompetitionRootQuery = {
-  competitionById: CompetitionTC.getResolver('findById'),
-  competitionByIds: CompetitionTC.getResolver('findByIds'),
-  competitionOne: CompetitionTC.getResolver('findOne'),
-  competitionMany: CompetitionTC.getResolver('findMany'),
-  competitionCount: CompetitionTC.getResolver('count'),
-  competitionConnection: CompetitionTC.getResolver('connection'),
-  competitionPagination: CompetitionTC.getResolver('pagination'),
+// STEP 3: CREATE CRAZY GraphQL SCHEMA WITH ALL CRUD POOL OPERATIONS
+const PoolRootQuery = {
+  poolById: PoolTC.getResolver('findById'),
+  poolByIds: PoolTC.getResolver('findByIds'),
+  poolOne: PoolTC.getResolver('findOne'),
+  poolMany: PoolTC.getResolver('findMany'),
+  poolCount: PoolTC.getResolver('count'),
+  poolConnection: PoolTC.getResolver('connection'),
+  poolPagination: PoolTC.getResolver('pagination'),
 };
 
-const CompetitionRootMutation = {
-  competitionCreate: CompetitionTC.getResolver('createOne'),
-  competitionUpdateById: CompetitionTC.getResolver('updateById'),
-  competitionUpdateOne: CompetitionTC.getResolver('updateOne'),
-  competitionUpdateMany: CompetitionTC.getResolver('updateMany'),
-  competitionRemoveById: CompetitionTC.getResolver('removeById'),
-  competitionRemoveOne: CompetitionTC.getResolver('removeOne'),
-  competitionRemoveMany: CompetitionTC.getResolver('removeMany'),
+const PoolRootMutation = {
+  poolCreate: PoolTC.getResolver('createOne'),
+  poolUpdateById: PoolTC.getResolver('updateById'),
+  poolUpdateOne: PoolTC.getResolver('updateOne'),
+  poolUpdateMany: PoolTC.getResolver('updateMany'),
+  poolRemoveById: PoolTC.getResolver('removeById'),
+  poolRemoveOne: PoolTC.getResolver('removeOne'),
+  poolRemoveMany: PoolTC.getResolver('removeMany'),
 };
 
 export {
-  Competition,
-  CompetitionTC,
-  CompetitionRootQuery,
-  CompetitionRootMutation
+  Pool,
+  PoolTC,
+  PoolRootQuery,
+  PoolRootMutation
 };

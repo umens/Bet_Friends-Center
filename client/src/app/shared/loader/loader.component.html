@@ -1,3 +1,11 @@
-<div [hidden]="!isLoading" class="text-xs-center">
-    <i class="fas fa-cog fa-spin fa-3x"></i> <span>{{message}}</span>
+<div [hidden]="!isLoading" class="text-xs-center vertical-center">
+  <div class="sk-folding-cube">
+    <div class="sk-cube1 sk-cube"></div>
+    <div class="sk-cube2 sk-cube"></div>
+    <div class="sk-cube4 sk-cube"></div>
+    <div class="sk-cube3 sk-cube"></div>
+  </div>
+  <div id="messageLoader">
+    <p class="loadingText">{{ message }}<span>.</span><span>.</span><span>.</span></p>
+  </div>
 </div>

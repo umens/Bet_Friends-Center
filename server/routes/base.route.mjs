@@ -7,15 +7,15 @@ export default [{
     path: "/api/v1/currentMatchDay",
     handler: async (request, h) => {
       try {
-        var competitionsMatchday = [];
-        const competitions = await Models.Competition.find({ players: request.auth.credentials._id }).populate('season');
-        for (const competition of competitions) {
-          const fixtures = await Models.Fixture.find({ matchDay: competition.season.currentMatchDay, season: competition.season._id })
+        var poolsMatchday = [];
+        const pools = await Models.Pool.find({ players: request.auth.credentials._id, status: { $ne: 'FINNISHED' } }).populate('season');
+        for (const pool of pools) {
+          const fixtures = await Models.Fixture.find({ matchDay: pool.season.currentMatchDay, season: pool.season._id })
             .populate('homeTeam')
             .populate('awayTeam');
-          competitionsMatchday.push(Object.assign(competition.toJSON(), { fixtures: fixtures.map(function (f) { return f.toJSON() }) }))
+            poolsMatchday.push(Object.assign(pool.toJSON(), { fixtures: fixtures.map(function (f) { return f.toJSON() }) }))
         }
-        return h.response(competitionsMatchday);
+        return h.response(poolsMatchday);
       } catch (err) {
         throw Boom.badRequest(err);
       }

@@ -4,7 +4,7 @@ import mongoose_delete from 'mongoose-delete';
 import {
   FixtureTC,
   UserTC,
-  CompetitionTC
+  PoolTC
 } from './';
 
 const customizationOptions = {
@@ -37,9 +37,9 @@ const BetSchema = new Mongoose.Schema({
     ref: 'User',
     required: true
   },
-  competition: {
+  pool: {
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Competition',
+    ref: 'Pool',
     required: true
   },
 }, {
@@ -81,13 +81,13 @@ BetTC.addRelation(
   }
 );
 BetTC.addRelation(
-  'competition', {
-    resolver: () => CompetitionTC.getResolver('findById'),
+  'pool', {
+    resolver: () => PoolTC.getResolver('findById'),
     prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
-      _id: (source) => source.competition,
+      _id: (source) => source.pool,
     },
     projection: {
-      competition: 1
+      pool: 1
     }, // point fields in source object, which should be fetched from DB
   }
 );

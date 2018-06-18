@@ -1,16 +1,26 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { AuthenticationService, Credentials} from './authentication.service';
 
 const credentialsKey = 'credentials';
 
 describe('AuthenticationService', () => {
+
   let authenticationService: AuthenticationService;
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
       providers: [AuthenticationService]
     });
+
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
   });
 
   beforeEach(inject([
@@ -23,6 +33,7 @@ describe('AuthenticationService', () => {
     // Cleanup
     localStorage.removeItem(credentialsKey);
     sessionStorage.removeItem(credentialsKey);
+    // httpTestingController.verify();
   });
 
   describe('login', () => {

@@ -3,8 +3,8 @@ import composeWithMongoose from 'graphql-compose-mongoose';
 import mongoose_delete from 'mongoose-delete';
 import bcrypt from 'bcrypt';
 import {
-  CompetitionTC
-} from './competition.model';
+  PoolTC
+} from './pool.model';
 
 import {
   HashPassword
@@ -47,9 +47,9 @@ const UserSchema = new Mongoose.Schema({
     type: String,
     default: null
   },
-  competitions: [{
+  pools: [{
     type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Competition'
+    ref: 'Pool'
   }],
 }, {
   timestamps: true
@@ -113,13 +113,13 @@ UserTC.wrapResolverResolve('updateById', next => async rp => {
 
 // add relations
 UserTC.addRelation(
-  'competitions', {
-    resolver: () => CompetitionTC.getResolver('findByIds'),
+  'pools', {
+    resolver: () => PoolTC.getResolver('findByIds'),
     prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
-      _ids: (source) => source.competitions,
+      _ids: (source) => source.pools,
     },
     projection: {
-      competitions: 1
+      pools: 1
     }, // point fields in source object, which should be fetched from DB
   }
 );

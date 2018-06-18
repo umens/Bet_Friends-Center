@@ -1,6 +1,6 @@
 export * from './user.model';
 export * from './bet.model';
-export * from './competition.model';
+export * from './pool.model';
 export * from './fixture.model';
 export * from './league.model';
 export * from './season.model';

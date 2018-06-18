@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 export interface Credentials {
   // Customize received credentials here
   username: string;
+  email: string;
+  picture: string;
+  scope: string;
   token: string;
 }
 
@@ -25,7 +30,7 @@ export class AuthenticationService {
   private _credentials: Credentials | null;
   redirectUrl: string;
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -38,13 +43,18 @@ export class AuthenticationService {
    * @return {Observable<Credentials>} The user credentials.
    */
   login(context: LoginContext): Observable<Credentials> {
-    // Replace by proper authentication call
-    const data = {
-      username: context.username,
-      token: '123456'
-    };
-    this.setCredentials(data, context.remember);
-    return of(data);
+    return this.httpClient.post<Credentials>('login', {email: context.username, password: context.password})
+    .pipe(
+      map(data => {
+        this.setCredentials(data, context.remember);
+        return data;
+      }),
+      catchError((err) => {
+        throw err;
+      })
+    );
+    // this.setCredentials(data, context.remember);
+    // return of(data);
   }
 
   /**

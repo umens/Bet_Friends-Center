@@ -1,17 +1,18 @@
 import * as Models from '../models';
-import Joi from 'joi';
 import Boom from 'boom';
 import jwt from 'jsonwebtoken';
 import {
   ConfigAuth
 } from '../config/default';
-import { Mailer } from '../services';
+import {
+  Mailer
+} from '../services';
 import nodemailer from 'nodemailer';
 import randomstring from 'randomstring';
 
-const createAccount = {
+export default {
 
-  handler: async (request, h) => {
+  createAccount: async (request, h) => {
     const user = Models.User({
       firstname: request.payload.firstname,
       lastname: request.payload.lastname,
@@ -43,22 +44,8 @@ const createAccount = {
       return Boom.badImplementation(err);
     };
   },
-  options: {
-    validate: {
-      payload: {
-        firstname: Joi.string().required(),
-        lastname: Joi.string().required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().required()
-      }
-    },
-    auth: false
-  }
-};
 
-const login = {
-
-  handler: async (request, h) => {
+  login: async (request, h) => {
     try {
       const user = await Models.User.findOne({
         email: request.payload.email
@@ -78,6 +65,7 @@ const login = {
         };
         var res = {
           username: user.fullname,
+          email: user.email,
           picture: user.picture,
           scope: user.scope,
           token: jwt.sign(tokenData, ConfigAuth.secretKey)
@@ -90,20 +78,8 @@ const login = {
       return Boom.badImplementation(err);
     };
   },
-  options: {
-    validate: {
-      payload: {
-        email: Joi.string().email().required(),
-        password: Joi.string().required()
-      }
-    },
-    auth: false
-  }
-};
 
-const verifyEmail = {
-
-  handler: async (request, h) => {
+  verifyEmail: async (request, h) => {
     try {
 
       const decoded = jwt.verify(request.params.token, ConfigAuth.secretKey);
@@ -125,21 +101,12 @@ const verifyEmail = {
       return Boom.badImplementation(err);
     }
   },
-  options: {
-    validate: {
-      params: {
-        token: Joi.string().required()
-      }
-    },
-    auth: false
-  }
-};
 
-const forgotPassword = {
-
-  handler: async (request, h) => {
+  forgotPassword: async (request, h) => {
     try {
-      const user = await Models.User.findOne({ email: request.payload.email });
+      const user = await Models.User.findOne({
+        email: request.payload.email
+      });
       if (!user)
         return Boom.forbidden("invalid username");
 
@@ -158,21 +125,12 @@ const forgotPassword = {
       return Boom.badImplementation(err);
     };
   },
-  options: {
-    validate: {
-      payload: {
-        email: Joi.string().email().required()
-      }
-    },
-    auth: false
-  }
-};
 
-const resendVerificationEmail = {
-
-  handler: async (request, h) => {
+  resendVerificationEmail: async (request, h) => {
     try {
-      const user = await Models.User.findOne({ email: request.payload.email });
+      const user = await Models.User.findOne({
+        email: request.payload.email
+      });
       if (!user)
         return Boom.forbidden("invalid username");
 
@@ -191,21 +149,5 @@ const resendVerificationEmail = {
     } catch (err) {
       return Boom.badImplementation(err);
     };
-  },
-  options: {
-    validate: {
-      payload: {
-        email: Joi.string().email().required()
-      }
-    },
-    auth: false
   }
-};
-
-export {
-  createAccount,
-  login,
-  verifyEmail,
-  forgotPassword,
-  resendVerificationEmail
-};
+}

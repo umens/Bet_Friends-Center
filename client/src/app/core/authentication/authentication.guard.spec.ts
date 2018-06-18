@@ -1,9 +1,11 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 import { AuthenticationService } from './authentication.service';
 import { MockAuthenticationService } from './authentication.service.mock';
 import { AuthenticationGuard } from './authentication.guard';
+
+const mockSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
 
 describe('AuthenticationGuard', () => {
   let authenticationGuard: AuthenticationGuard;
@@ -38,7 +40,7 @@ describe('AuthenticationGuard', () => {
   });
 
   it('should return true if user is authenticated', () => {
-    expect(authenticationGuard.canActivate()).toBe(true);
+    expect(authenticationGuard.canActivate(new ActivatedRouteSnapshot(), mockSnapshot)).toBe(true);
   });
 
   it('should return false and redirect to login if user is not authenticated', () => {
@@ -46,7 +48,7 @@ describe('AuthenticationGuard', () => {
     authenticationService.credentials = null;
 
     // Act
-    const result = authenticationGuard.canActivate();
+    const result = authenticationGuard.canActivate(new ActivatedRouteSnapshot(), mockSnapshot);
 
     // Assert
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/login'], {replaceUrl: true});

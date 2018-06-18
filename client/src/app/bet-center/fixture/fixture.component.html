@@ -1,0 +1,31 @@
+<div class="col mt-3">
+  <div class="statsfc-next-fixture">
+    <div class="sfc_nextfixture">
+      <table>
+        <tbody>
+          <tr>
+            <td class="sfc_home">
+              <img src="{{ fixture.homeTeam.logo }}" title="{{ fixture.homeTeam.label }}" width="80">
+              <br>
+              <span class="sfc_team">{{ fixture.homeTeam.label }}</span>
+            </td>
+            <td class="sfc_details">
+              <span class="sfc_competition">{{ fixture.result.goalsHomeTeam }} - {{ fixture.result.goalsAwayTeam }}</span>
+              <br>
+              <span>
+                <span class="sfc_date">{{ fixture.date | date: 'mediumDate' : 'fr' }}</span>
+                <br>
+                <span class="sfc_time">{{ fixture.date | date: 'shortTime' : 'fr' }}</span>
+              </span>
+            </td>
+            <td class="sfc_away">
+              <img src="{{ fixture.awayTeam.logo }}" title="{{ fixture.awayTeam.label }}" width="80">
+              <br>
+              <span class="sfc_team">{{ fixture.awayTeam.label }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

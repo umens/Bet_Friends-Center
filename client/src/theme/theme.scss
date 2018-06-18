@@ -10,8 +10,8 @@ html {
   min-height: 100%;
 }
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  /* Margin bottom by footer height + 15px */
+  margin-bottom: 75px;
 }
 .footer {
   position: absolute;
@@ -28,8 +28,9 @@ body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
-body > .container, main.container {
-  padding: 60px 15px 0;
+body > .container, main.container,
+body > .container-fluid, main.container-fluid {
+  padding: 56px 15px 0;
 }
 
 .footer > .container {
@@ -39,4 +40,8 @@ body > .container, main.container {
 
 code {
   font-size: 80%;
+}
+
+.accordion .card:only-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
 }
