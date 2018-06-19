@@ -33,3 +33,11 @@ div.sfc_nextfixture table td span.sfc_date {
 div.sfc_nextfixture table td.sfc_home, div.sfc_nextfixture table td.sfc_away {
   width: 25%;
 }
+
+.blink-dot {
+  animation: blinker 0.5s cubic-bezier(.5, 0, .5, .5) infinite alternate;  
+}
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

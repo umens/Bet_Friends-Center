@@ -13,7 +13,6 @@ import { SharedModule } from './shared';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BetCenterModule } from './bet-center/bet-center.module';
-import { UserModule } from './user/user.module';
 
 @NgModule({
   imports: [
@@ -27,7 +26,6 @@ import { UserModule } from './user/user.module';
     // AboutModule,
     // LoginModule,
     BetCenterModule,
-    UserModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],

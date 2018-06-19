@@ -4,4 +4,5 @@ export enum NotificationType {
   ERROR = 2,
   INFO = 3,
   BARE = 4,
+  WARN = 5,
 }

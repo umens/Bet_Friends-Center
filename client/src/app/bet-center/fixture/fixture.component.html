@@ -1,4 +1,4 @@
-<div class="col mt-3">
+<div class='col mt-3'>
   <div class="statsfc-next-fixture">
     <div class="sfc_nextfixture">
       <table>
@@ -12,10 +12,13 @@
             <td class="sfc_details">
               <span class="sfc_competition">{{ fixture.result.goalsHomeTeam }} - {{ fixture.result.goalsAwayTeam }}</span>
               <br>
-              <span>
+              <span [hidden]="fixture.status == 'IN_PLAY'">
                 <span class="sfc_date">{{ fixture.date | date: 'mediumDate' : 'fr' }}</span>
                 <br>
                 <span class="sfc_time">{{ fixture.date | date: 'shortTime' : 'fr' }}</span>
+              </span>
+              <span [hidden]="fixture.status != 'IN_PLAY'">
+                <div><i class="fa fa-circle text-danger blink-dot"></i>&nbsp; LIVE </div>
               </span>
             </td>
             <td class="sfc_away">

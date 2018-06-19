@@ -58,19 +58,22 @@ export class AppComponent implements OnInit {
   showNotification(notification: Notification): void {
     switch (notification.type) {
       case NotificationType.SUCCESS:
-        this._service.success(notification.title, notification.content);
+        this._service.success(notification.title, notification.content, notification.override);
         break;
       case NotificationType.ALERT:
-        this._service.alert(notification.title, notification.content);
+        this._service.alert(notification.title, notification.content, notification.override);
         break;
       case NotificationType.ERROR:
-        this._service.error(notification.title, notification.content);
+        this._service.error(notification.title, notification.content, notification.override);
         break;
       case NotificationType.INFO:
-        this._service.info(notification.title, notification.content);
+        this._service.info(notification.title, notification.content, notification.override);
         break;
       case NotificationType.BARE:
-        this._service.bare(notification.title, notification.content);
+        this._service.bare(notification.title, notification.content, notification.override);
+        break;
+      case NotificationType.WARN:
+        this._service.warn(notification.title, notification.content, notification.override);
         break;
     }
   }

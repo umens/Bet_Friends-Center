@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NotFoundComponent } from './core';
+import { NotFoundComponent, LoginComponent } from './core';
 
 const routes: Routes = [
-  // { path: '**', component: NotFoundComponent },
+  { path: 'login', component: LoginComponent, data: { title: 'Login' } },
   // Fallback when no prior route is matched
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  // { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

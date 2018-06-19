@@ -28,11 +28,19 @@ export class NotFoundComponent implements OnInit, OnDestroy {
     link.rel = 'stylesheet';
     link.href = '//fonts.googleapis.com/css?family=Open+Sans';
     this.head.appendChild(link);
+    const link2 = document.createElement('link');
+    link2.id = '404Page';
+    link2.type = 'text/css';
+    link2.rel = 'stylesheet';
+    link2.href = 'assets/404page.css';
+    this.head.appendChild(link2);
   }
 
   ngOnDestroy(): void {
     const link = document.getElementById('font-404');
+    const link2 = document.getElementById('404Page');
     this.head.removeChild(link);
+    this.head.removeChild(link2);
   }
 
   goBack(): void {

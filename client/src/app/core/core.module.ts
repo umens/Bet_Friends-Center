@@ -21,10 +21,13 @@ import { NotificationService } from './notification.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FooterComponent } from './shell/footer/footer.component';
 import { TokenInterceptor } from './http/token.interceptor';
+import { LoginComponent } from './login/login.component';
+import { SharedModule } from '../shared';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     HttpClientModule,
     RouterModule,
     SimpleNotificationsModule.forRoot(),
@@ -34,6 +37,7 @@ import { TokenInterceptor } from './http/token.interceptor';
     ShellComponent,
     NotFoundComponent,
     FooterComponent,
+    LoginComponent,
   ],
   exports: [
     SimpleNotificationsComponent
