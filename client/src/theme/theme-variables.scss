@@ -68,6 +68,8 @@ $text-color: $palette-black;
 $app-primary: $brand-primary;
 $base-font-size: 16px;
 
+$link-hover-decoration: none !default;
+
 // Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
 // in components.
 @import "~bootstrap/scss/_functions";

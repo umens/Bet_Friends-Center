@@ -17,6 +17,10 @@ export class FixtureComponent implements OnInit {
     private notificationService: NotificationService
   ) { }
 
+  sanitizeUrl(logoUrl: string) {
+    return logoUrl.replace(/(?=[() ])/g, '\\');
+  }
+
   ngOnInit() {
     // if (this.fixture.apiRef === 165087) {
     //   setTimeout(() => {

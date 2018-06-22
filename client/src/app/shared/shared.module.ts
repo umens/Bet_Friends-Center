@@ -6,6 +6,7 @@ import { BuildColumnComponent } from './build-column/build-column.component';
 import { SplitByColumnPipe } from './pipes/split-by-column.pipe';
 import { DefaultPipe } from './pipes/default.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ListItemDirective } from './directives/list-item.directive';
 
 @NgModule({
   imports: [
@@ -15,10 +16,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     LoaderComponent,
     BuildColumnComponent,
     SplitByColumnPipe,
-    DefaultPipe
+    DefaultPipe,
+    ListItemDirective
   ],
   exports: [
     LoaderComponent,
+    BuildColumnComponent,
     FormsModule,
     ReactiveFormsModule
   ]

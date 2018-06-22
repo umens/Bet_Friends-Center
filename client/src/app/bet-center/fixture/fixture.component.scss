@@ -41,3 +41,16 @@ div.sfc_nextfixture table td.sfc_home, div.sfc_nextfixture table td.sfc_away {
   from { opacity: 1; }
   to { opacity: 0; }
 }
+
+.ratio-4-3{
+  width:100%;
+  position:relative;
+  background:url() 50% 50% no-repeat;
+  background-size:contain;
+  background-clip:content-box;
+}
+.ratio-4-3:before{
+	display:block;
+    content:"";
+    padding-top:75%;
+}

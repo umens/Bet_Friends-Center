@@ -23,6 +23,8 @@ import { FooterComponent } from './shell/footer/footer.component';
 import { TokenInterceptor } from './http/token.interceptor';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared';
+import { CreateAccountComponent } from './create-account/create-account.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { SharedModule } from '../shared';
     NotFoundComponent,
     FooterComponent,
     LoginComponent,
+    CreateAccountComponent,
+    ForgotPasswordComponent,
   ],
   exports: [
     SimpleNotificationsComponent

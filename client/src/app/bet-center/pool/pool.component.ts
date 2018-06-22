@@ -5,6 +5,7 @@ import { NotificationType, Notification } from '../../models';
 import { Pool } from '../../models/pool';
 import { ActivatedRoute } from '@angular/router';
 import { MatchDay } from '../../models/match-day';
+import { Fixture, StatusFixture } from '../../models/fixture';
 
 @Component({
   selector: 'app-pool',
@@ -15,6 +16,7 @@ export class PoolComponent implements OnInit {
 
   isLoading: boolean;
   pool: MatchDay;
+  diplayedFixtures: Fixture[];
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +36,7 @@ export class PoolComponent implements OnInit {
       .subscribe((data: MatchDay) => {
         this.isLoading = false;
         this.pool = data;
+        this.diplayedFixtures = this.getAvailableFixtures(data.fixtures as Fixture[]);
       }, // success path
       (error) => {
         const notification: Notification = new Notification({
@@ -45,6 +48,12 @@ export class PoolComponent implements OnInit {
         // this.isLoading = false;
       } // error path
     );
+  }
+
+  getAvailableFixtures(fixtures: Fixture[]): Fixture[] {
+    return fixtures.filter(function(fixture) {
+      return fixture.status !== StatusFixture.Finnished;
+    });
   }
 
 }

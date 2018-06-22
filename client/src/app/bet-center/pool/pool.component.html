@@ -4,9 +4,11 @@
   </div>
 </div>
 <div class="row" [hidden]="isLoading">
-  <!-- <div class="col-12"> -->
-    <!-- <div class="row"> -->
-      <app-fixture *ngFor="let fixture of pool?.fixtures" [hidden]="fixture.status === 'FINISHED'" [fixture]="fixture"></app-fixture>
-    <!-- </div> -->
-  <!-- </div> -->
+  <div class="col">
+    <app-build-column [items]="diplayedFixtures" [gridCols]="2">
+      <ng-template let-fixture>
+        <app-fixture [hidden]="fixture.status === 'FINISHED'" [fixture]="fixture"></app-fixture>
+      </ng-template>
+    </app-build-column>
+  </div>
 </div>
