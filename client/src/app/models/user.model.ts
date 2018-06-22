@@ -1,10 +1,11 @@
 export class User {
 
-  id: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   picture: string;
   email: string;
+  scope: string;
+  token: string;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);
@@ -18,7 +19,7 @@ export class User {
    * @memberOf User
    */
   public displayFullName(): string {
-    return this.firstName + ' ' + this.lastName;
+    return this.firstname + ' ' + this.lastname;
   }
 
   /**
@@ -28,14 +29,15 @@ export class User {
    *
    * @memberOf User
    */
-  stringify(): string {
+  public stringify(): string {
     let preObject: any;
     preObject = {
-      id: this.id,
-      firstName: this.firstName,
-      lastName: this.lastName,
+      firstName: this.firstname,
+      lastName: this.lastname,
       picture: this.picture,
       email: this.email,
+      scope: this.scope,
+      token: this.token,
     };
     return JSON.stringify(preObject);
   }

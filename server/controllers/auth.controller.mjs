@@ -2,152 +2,153 @@ import * as Models from '../models';
 import Boom from 'boom';
 import jwt from 'jsonwebtoken';
 import {
-  ConfigAuth
+    ConfigAuth
 } from '../config/default';
 import {
-  Mailer
+    Mailer
 } from '../services';
 import nodemailer from 'nodemailer';
 import randomstring from 'randomstring';
 
 export default {
 
-  createAccount: async (request, h) => {
-    const user = Models.User({
-      firstname: request.payload.firstname,
-      lastname: request.payload.lastname,
-      email: request.payload.email,
-      password: request.payload.password
-    });
-    try {
-      const newUser = await user.save();
+    createAccount: async (request, h) => {
+        const user = Models.User({
+            firstname: request.payload.firstname,
+            lastname: request.payload.lastname,
+            email: request.payload.email,
+            password: request.payload.password
+        });
+        try {
+            const newUser = await user.save();
 
-      const indexCreated = await Models.User.init();
+            const indexCreated = await Models.User.init();
 
-      if (!newUser)
-        return Boom.badRequest('problème durant la création du compte');
+            if (!newUser)
+                return Boom.badRequest('problème durant la création du compte');
 
-      const tokenData = {
-        scope: [newUser.scope],
-        _id: newUser._id
-      };
+            const tokenData = {
+                scope: [newUser.scope],
+                _id: newUser._id
+            };
 
-      const mailInfos = await Mailer.sentMailVerificationLink(newUser, jwt.sign(tokenData, ConfigAuth.secretKey));
+            const mailInfos = await Mailer.sentMailVerificationLink(newUser, jwt.sign(tokenData, ConfigAuth.secretKey));
 
-      console.log(nodemailer.getTestMessageUrl(mailInfos));
+            console.log(nodemailer.getTestMessageUrl(mailInfos));
 
-      return h.response();
-    } catch (err) {
-      if (err.name === 'MongoError' && err.code === 11000) {
-        return Boom.forbidden("please provide another user email");
-      }
-      return Boom.badImplementation(err);
-    };
-  },
-
-  login: async (request, h) => {
-    try {
-      const user = await Models.User.findOne({
-        email: request.payload.email
-      });
-      if (!user)
-        return Boom.forbidden("invalid username or password");
-
-      const isMatch = await user.comparePassword(request.payload.password)
-
-      if (isMatch) {
-        if (!user.isVerified)
-          return Boom.forbidden("Your email address is not verified. please verify your email address to proceed");
-
-        var tokenData = {
-          scope: [user.scope],
-          _id: user._id
+            return h.response();
+        } catch (err) {
+            if (err.name === 'MongoError' && err.code === 11000) {
+                return Boom.forbidden("please provide another user email");
+            }
+            return Boom.badImplementation(err);
         };
-        var res = {
-          username: user.fullname,
-          email: user.email,
-          picture: user.picture,
-          scope: user.scope,
-          token: jwt.sign(tokenData, ConfigAuth.secretKey)
+    },
+
+    login: async (request, h) => {
+        try {
+            const user = await Models.User.findOne({
+                email: request.payload.email
+            });
+            if (!user)
+                return Boom.forbidden("invalid username or password");
+
+            const isMatch = await user.comparePassword(request.payload.password)
+
+            if (isMatch) {
+                if (!user.isVerified)
+                    return Boom.forbidden("Your email address is not verified. please verify your email address to proceed");
+
+                var tokenData = {
+                    scope: [user.scope],
+                    _id: user._id
+                };
+                var res = {
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    picture: user.picture,
+                    scope: user.scope,
+                    token: jwt.sign(tokenData, ConfigAuth.secretKey)
+                };
+                return res;
+            } else {
+                return Boom.forbidden("invalid username or password");
+            }
+        } catch (err) {
+            return Boom.badImplementation(err);
         };
-        return res;
-      } else {
-        return Boom.forbidden("invalid username or password");
-      }
-    } catch (err) {
-      return Boom.badImplementation(err);
-    };
-  },
+    },
 
-  verifyEmail: async (request, h) => {
-    try {
+    verifyEmail: async (request, h) => {
+        try {
 
-      const decoded = jwt.verify(request.params.token, ConfigAuth.secretKey);
+            const decoded = jwt.verify(request.params.token, ConfigAuth.secretKey);
 
-      if (decoded === undefined) return Boom.forbidden("invalid verification link");
-      if (decoded.scope[0] != "User") return Boom.forbidden("invalid verification link");
+            if (decoded === undefined) return Boom.forbidden("invalid verification link");
+            if (decoded.scope[0] != "User") return Boom.forbidden("invalid verification link");
 
-      var user = await Models.User.findById(decoded._id);
-      if (!user) return Boom.forbidden("invalid verification link");
-      if (user.isVerified === true) return Boom.forbidden("account is already verified");
+            var user = await Models.User.findById(decoded._id);
+            if (!user) return Boom.forbidden("invalid verification link");
+            if (user.isVerified === true) return Boom.forbidden("account is already verified");
 
-      user.isVerified = true;
-      const updatedUser = await user.save();
+            user.isVerified = true;
+            const updatedUser = await user.save();
 
-      if (!updatedUser) return Boom.notFound("invalid verification link");
+            if (!updatedUser) return Boom.notFound("invalid verification link");
 
-      return h.response();
-    } catch (err) {
-      return Boom.badImplementation(err);
+            return h.response();
+        } catch (err) {
+            return Boom.badImplementation(err);
+        }
+    },
+
+    forgotPassword: async (request, h) => {
+        try {
+            const user = await Models.User.findOne({
+                email: request.payload.email
+            });
+            if (!user)
+                return Boom.forbidden("invalid username");
+
+            const newMDP = randomstring.generate(8);
+            user.password = newMDP;
+            const updatedUser = await user.save();
+
+            if (!updatedUser) return Boom.notFound("invalid verification link");
+
+            const mailInfos = await Mailer.sentMailForgotPassword(user, newMDP);
+
+            console.log(nodemailer.getTestMessageUrl(mailInfos));
+
+            return h.response();
+        } catch (err) {
+            return Boom.badImplementation(err);
+        };
+    },
+
+    resendVerificationEmail: async (request, h) => {
+        try {
+            const user = await Models.User.findOne({
+                email: request.payload.email
+            });
+            if (!user)
+                return Boom.forbidden("invalid username");
+
+            if (user.isVerified === true) return Boom.forbidden("account is already verified");
+
+            const tokenData = {
+                scope: [user.scope],
+                _id: user._id
+            };
+
+            const mailInfos = await Mailer.sentMailVerificationLink(user, jwt.sign(tokenData, ConfigAuth.secretKey));
+
+            console.log(nodemailer.getTestMessageUrl(mailInfos));
+
+            return h.response();
+        } catch (err) {
+            return Boom.badImplementation(err);
+        };
     }
-  },
-
-  forgotPassword: async (request, h) => {
-    try {
-      const user = await Models.User.findOne({
-        email: request.payload.email
-      });
-      if (!user)
-        return Boom.forbidden("invalid username");
-
-      const newMDP = randomstring.generate(8);
-      user.password = newMDP;
-      const updatedUser = await user.save();
-
-      if (!updatedUser) return Boom.notFound("invalid verification link");
-
-      const mailInfos = await Mailer.sentMailForgotPassword(user, newMDP);
-
-      console.log(nodemailer.getTestMessageUrl(mailInfos));
-
-      return h.response();
-    } catch (err) {
-      return Boom.badImplementation(err);
-    };
-  },
-
-  resendVerificationEmail: async (request, h) => {
-    try {
-      const user = await Models.User.findOne({
-        email: request.payload.email
-      });
-      if (!user)
-        return Boom.forbidden("invalid username");
-
-      if (user.isVerified === true) return Boom.forbidden("account is already verified");
-
-      const tokenData = {
-        scope: [user.scope],
-        _id: user._id
-      };
-
-      const mailInfos = await Mailer.sentMailVerificationLink(user, jwt.sign(tokenData, ConfigAuth.secretKey));
-
-      console.log(nodemailer.getTestMessageUrl(mailInfos));
-
-      return h.response();
-    } catch (err) {
-      return Boom.badImplementation(err);
-    };
-  }
 }

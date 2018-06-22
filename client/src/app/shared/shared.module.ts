@@ -23,7 +23,8 @@ import { ListItemDirective } from './directives/list-item.directive';
     LoaderComponent,
     BuildColumnComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DefaultPipe
   ]
 })
 export class SharedModule { }

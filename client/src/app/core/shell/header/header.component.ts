@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { User } from '../../../models';
 
 @Component({
   selector: 'app-header',
@@ -28,9 +29,9 @@ export class HeaderComponent implements OnInit {
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
-  get username(): string | null {
+  get user(): User | null {
     const credentials = this.authenticationService.credentials;
-    return credentials ? credentials.username : null;
+    return credentials ? new User(credentials) : null;
   }
 
 }

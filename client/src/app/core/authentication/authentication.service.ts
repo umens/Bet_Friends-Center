@@ -5,7 +5,8 @@ import { map, catchError } from 'rxjs/operators';
 
 export interface Credentials {
   // Customize received credentials here
-  username: string;
+  firstname: string;
+  lastname: string;
   email: string;
   picture: string;
   scope: string;
@@ -43,16 +44,16 @@ export class AuthenticationService {
    * @return {Observable<Credentials>} The user credentials.
    */
   login(context: LoginContext): Observable<Credentials> {
-    return this.httpClient.post<Credentials>('login', {email: context.username, password: context.password})
-    .pipe(
-      map(data => {
-        this.setCredentials(data, context.remember);
-        return data;
-      }),
-      catchError((err) => {
-        throw err;
-      })
-    );
+    return this.httpClient.post<Credentials>('login', { email: context.username, password: context.password })
+      .pipe(
+        map(data => {
+          this.setCredentials(data, context.remember);
+          return data;
+        }),
+        catchError((err) => {
+          throw err;
+        })
+      );
     // this.setCredentials(data, context.remember);
     // return of(data);
   }

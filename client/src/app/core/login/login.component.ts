@@ -55,10 +55,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }))
       .subscribe(credentials => {
-        log.debug(`${credentials.username} successfully logged in`);
+        log.debug(`${credentials.firstname} ${credentials.lastname} successfully logged in`);
         const notification: Notification = new Notification({
           title: 'Logged In',
-          content: 'Hey ' + credentials.username,
+          content: `Hey ${credentials.firstname} ${credentials.lastname} successfully logged in`,
           type: NotificationType.SUCCESS
         });
         this.notificationService.showNotification(notification);
