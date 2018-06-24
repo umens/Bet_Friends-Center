@@ -18,6 +18,16 @@ export interface LoginContext {
   password: string;
   remember?: boolean;
 }
+export interface CreateAccountContext {
+  firstname: string;
+  lastname: string;
+  password: string;
+  email: string;
+  agreeCGU?: boolean;
+}
+export interface ForgotPasswordContext {
+  email: string;
+}
 
 const credentialsKey = 'credentials';
 
@@ -101,6 +111,39 @@ export class AuthenticationService {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
     }
+  }
+
+  createAccount(context: CreateAccountContext): Observable<any> {
+    return this.httpClient.post<any>('create-account', {
+      email: context.email,
+      password: context.password,
+      firstname: context.firstname,
+      lastname: context.lastname
+    })
+      .pipe(
+        map(data => {
+          // this.setCredentials(data, context.remember);
+          return data;
+        }),
+        catchError((err) => {
+          throw err;
+        })
+      );
+  }
+
+  forgotPassord(context: ForgotPasswordContext): Observable<any> {
+    return this.httpClient.post<any>('forgot-password', {
+      email: context.email
+    })
+      .pipe(
+        map(data => {
+          // this.setCredentials(data, context.remember);
+          return data;
+        }),
+        catchError((err) => {
+          throw err;
+        })
+      );
   }
 
 }

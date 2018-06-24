@@ -7,6 +7,7 @@ import { SharedModule } from '../shared';
 import { CoreModule } from '../core';
 import { FixtureComponent } from './fixture/fixture.component';
 import { PoolComponent } from './pool/pool.component';
+import { StandingComponent } from './standing/standing.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,11 @@ import { PoolComponent } from './pool/pool.component';
     SharedModule,
     BetCenterRoutingModule
   ],
-  declarations: [HomeComponent, FixtureComponent, PoolComponent]
+  declarations: [
+    HomeComponent,
+    FixtureComponent,
+    PoolComponent,
+    StandingComponent
+  ]
 })
 export class BetCenterModule { }

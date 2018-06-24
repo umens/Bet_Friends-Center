@@ -66,6 +66,10 @@ const SeasonSchema = new Mongoose.Schema({
       playedGames: {
         type: Number,
         default: 0
+      },
+      previousRank: {
+        type: Number,
+        default: null
       }
     }]
   }], 

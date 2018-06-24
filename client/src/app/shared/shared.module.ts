@@ -7,24 +7,27 @@ import { SplitByColumnPipe } from './pipes/split-by-column.pipe';
 import { DefaultPipe } from './pipes/default.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ListItemDirective } from './directives/list-item.directive';
+import { RippleDirective } from './directives/ripple.directive';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [
     LoaderComponent,
     BuildColumnComponent,
     SplitByColumnPipe,
     DefaultPipe,
-    ListItemDirective
+    ListItemDirective,
+    RippleDirective
   ],
   exports: [
     LoaderComponent,
     BuildColumnComponent,
     FormsModule,
     ReactiveFormsModule,
-    DefaultPipe
+    DefaultPipe,
+    RippleDirective
   ]
 })
 export class SharedModule { }

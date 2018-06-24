@@ -7,12 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { CoreModule } from './core';
 import { SharedModule } from './shared';
-// import { HomeModule } from './home/home.module';
-// import { AboutModule } from './about/about.module';
-// import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BetCenterModule } from './bet-center/bet-center.module';
+import { UserModule } from './user/user.module';
+
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 @NgModule({
   imports: [
@@ -22,11 +23,11 @@ import { BetCenterModule } from './bet-center/bet-center.module';
     HttpClientModule,
     CoreModule,
     SharedModule,
-    // HomeModule,
-    // AboutModule,
-    // LoginModule,
     BetCenterModule,
-    AppRoutingModule
+    UserModule,
+    AppRoutingModule,
+    NgProgressModule.forRoot(),
+    NgProgressHttpModule,
   ],
   declarations: [AppComponent],
   providers: [

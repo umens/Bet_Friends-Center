@@ -5,10 +5,15 @@
 </div>
 <div class="row" [hidden]="isLoading">
   <div class="col">
-    <app-build-column [items]="diplayedFixtures" [gridCols]="2">
-      <ng-template let-fixture>
-        <app-fixture [hidden]="fixture.status === 'FINISHED'" [fixture]="fixture"></app-fixture>
-      </ng-template>
-    </app-build-column>
+    <app-standing [groups]="pool?.season.groups"></app-standing>
+    <div class="row">
+      <div class="col">
+        <app-build-column [items]="diplayedFixtures" [gridCols]="2">
+          <ng-template let-fixture>
+            <app-fixture [hidden]="fixture.status === 'FINISHED'" [fixture]="fixture"></app-fixture>
+          </ng-template>
+        </app-build-column>
+      </div>
+    </div>
   </div>
 </div>

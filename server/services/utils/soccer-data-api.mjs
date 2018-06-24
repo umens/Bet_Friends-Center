@@ -5,7 +5,7 @@ const SoccerDataApi = {
 
   updatesSeasonsDatas: async (league) => {
     try {
-      var seasons = await Models.Season.find({league: league._id});
+      var seasons = await Models.Season.find({league: league._id, status: { $ne: 'FINISHED'}});
       for (let season of seasons) {
         // fetch datas from api
         const options = {
@@ -15,13 +15,16 @@ const SoccerDataApi = {
           },
           json: true // Automatically parses the JSON string in the response
         };
-        const seasonDatas = await rp(options);
+        const seasonDatas = await rp(options);        
+        if(league.haveGroup) {
+          await SoccerDataApi.getGroupsDatas(season);
+        }
         await Models.Season.update({ _id: season._id }, { $set: {
           year: seasonDatas.year,
           label: seasonDatas.caption,
           currentMatchDay: seasonDatas.currentMatchday
         }});
-        return SoccerDataApi.updatesSeasonFixturesDatas(season, league);
+        return SoccerDataApi.updatesSeasonFixturesDatas(season);
       }
     } catch (err) {
       console.log(err)
@@ -29,7 +32,7 @@ const SoccerDataApi = {
     }
   },
 
-  updatesSeasonFixturesDatas: async (season, league) => {
+  updatesSeasonFixturesDatas: async (season) => {
     try {
       // fetch datas from api
       const options = {
@@ -77,12 +80,9 @@ const SoccerDataApi = {
         }
         localData = await localData.save();
       };
-      if(league.haveGroup) {
-        await SoccerDataApi.getGroupsDatas(season.apiRef);
-      }
       return;
     } catch (err) {
-      // console.log(err)
+      console.log(err)
       return err;
     }
   },
@@ -122,9 +122,8 @@ const SoccerDataApi = {
     }
   },
 
-  getGroupsDatas: async (seasonId) => {
+  getGroupsDatas: async (season) => {
     try {
-      var season = await Models.Season.findOne({ apiRef: seasonId });
       const options = {
         uri: 'http://api.football-data.org/v1/competitions/' + season.apiRef + '/leagueTable',
         headers: {
@@ -142,14 +141,19 @@ const SoccerDataApi = {
           group.teams = [];
           for (const groupAPI of groupsAPI) {
             const team = await SoccerDataApi.getTeamDatas(groupAPI.teamId);
-            group.teams.push({
+            let teamGroup = {
               team: team._id,
               rank: groupAPI.rank,
               points: groupAPI.points,
               goals: groupAPI.goals,
               goalsAgainst: groupAPI.goalsAgainst,
               playedGames: groupAPI.playedGames
-            });
+            };
+            if (season.currentMatchDay < groupsAPI.matchday && season.groups.findIndex(item => item.label === key) != -1) {
+              const groupTeamIndex = season.groups.findIndex(item => item.label === key);
+              teamGroup.previousRank = await SoccerDataApi.findPreviousTeamRank(season.groups[groupTeamIndex]["teams"], team._id);
+            }
+            group.teams.push(teamGroup);
           }
         }
         localGroups.push(group);
@@ -160,6 +164,15 @@ const SoccerDataApi = {
       return err;
     }
   },
+
+  findPreviousTeamRank: async (teams, teamId) => {
+    if (teams.findIndex(item => item.team === teamId) > -1) {
+      return teams[teams.findIndex(item => item.team === teamId)]['rank'];
+    }
+    else {
+      return null;
+    }
+  }
 
 };
 

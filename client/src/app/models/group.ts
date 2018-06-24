@@ -3,11 +3,12 @@ import { Team } from './team';
 export class GroupTeam {
 
   team: Team;
-  rank: Number;
-  points: Number;
-  goals: Number;
-  goalsAgainst: Number;
-  playedGames: Number;
+  rank: number;
+  points: number;
+  goals: number;
+  goalsAgainst: number;
+  playedGames: number;
+  previousRank: number;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

@@ -17,7 +17,7 @@ export class FixtureComponent implements OnInit {
     private notificationService: NotificationService
   ) { }
 
-  sanitizeUrl(logoUrl: string) {
+  sanitizeUrl(logoUrl: string): string {
     return logoUrl.replace(/(?=[() ])/g, '\\');
   }
 

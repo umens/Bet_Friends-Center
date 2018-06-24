@@ -44,6 +44,14 @@ export class AppComponent implements OnInit {
     this.notificationService.notification$.subscribe((notification: Notification) => {
       this.showNotification(notification);
     });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const title = this.getTitle(this.router.routerState, this.router.routerState.root).pop(); // .join(' - ');
+        this.titleService.setTitle(title);
+      }
+    });
+
    }
 
   ngOnInit() {
@@ -76,6 +84,20 @@ export class AppComponent implements OnInit {
         this._service.warn(notification.title, notification.content, notification.override);
         break;
     }
+  }
+
+  // collect that title data properties from all child routes
+  // there might be a better way but this worked for me
+  getTitle(state, parent) {
+    const data = [];
+    if (parent && parent.snapshot.data && parent.snapshot.data.title) {
+      data.push(parent.snapshot.data.title);
+    }
+
+    if (state && parent) {
+      data.push(... this.getTitle(state, state.firstChild(parent)));
+    }
+    return data;
   }
 
 

@@ -26,6 +26,9 @@
         "@angular/platform-browser-dynamic": "^6.0.3",
         "@angular/router": "^6.0.3",
         "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
+        "@ngx-progressbar/core": "^5.0.1",
+        "@ngx-progressbar/http": "^5.0.1",
+        "@ngx-progressbar/router": "^5.0.1",
         "angular2-notifications": "^1.0.2",
         "bootstrap": "^4.1.1",
         "core-js": "^2.5.4",
@@ -33,7 +36,9 @@
         "lodash": "^4.17.10",
         "moment": "^2.22.2",
         "moment-timezone": "^0.5.17",
+        "ngx-breadcrumbs": "^0.0.3",
         "rxjs": "^6.0.0",
+        "rxjs-compat": "6",
         "zone.js": "^0.8.26"
     },
     "devDependencies": {

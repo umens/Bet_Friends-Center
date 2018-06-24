@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { SimpleNotificationsModule, SimpleNotificationsComponent } from 'angular2-notifications';
+import { McBreadcrumbsModule } from 'ngx-breadcrumbs';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
@@ -21,10 +22,8 @@ import { NotificationService } from './notification.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FooterComponent } from './shell/footer/footer.component';
 import { TokenInterceptor } from './http/token.interceptor';
-import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared';
-import { CreateAccountComponent } from './create-account/create-account.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { PoolResolver } from './resolvers/pool.resolver';
 
 @NgModule({
   imports: [
@@ -32,6 +31,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     SharedModule,
     HttpClientModule,
     RouterModule,
+    McBreadcrumbsModule.forRoot(),
     SimpleNotificationsModule.forRoot(),
   ],
   declarations: [
@@ -39,9 +39,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ShellComponent,
     NotFoundComponent,
     FooterComponent,
-    LoginComponent,
-    CreateAccountComponent,
-    ForgotPasswordComponent,
   ],
   exports: [
     SimpleNotificationsComponent
@@ -67,6 +64,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
       multi: true
     },
     NotificationService,
+    PoolResolver
   ]
 })
 export class CoreModule {

@@ -1,10 +1,44 @@
-@import '../../../theme/theme-variables';
+@import '../../../theme/variables';
 @font-face {
   font-family: 'bebas_neueregular';
   src: url('../../../assets/fonts/bebasneue-webfont.eot');
   src: url('../../../assets/fonts/bebasneue-webfont.eot?#iefix') format('embedded-opentype'), url('../../../assets/fonts/bebasneue-webfont.woff') format('woff'), url('../../../assets/fonts/bebasneue-webfont.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+$not-found-blue: #12324F;
+.vertical-center {
+  // min-height: 100%;  
+  min-height: calc(100% - 131px);
+  /* Fallback for vh unit */
+  // min-height: 100vh;
+  /* Make it a flex container */
+  min-height: calc(100vh - 131px);
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  /* Align the bootstrap's container vertically */
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+
+     Therefore, we should use the following declarations to get it centered again */
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  margin: 0 !important;
 }
 
 #pages404 {
@@ -32,13 +66,13 @@ ul.rs {
 }
 
 .panda-wrapper {
-  background-color: $brand-primary; // can be #0098FF ?
+  background-color: lighten($not-found-blue, 20%); // can be #0098FF ?
   border-width: 8px 0;
   border-style: solid;
   border-color: #000;
   text-align: center;
   overflow: hidden;
-  // padding: 40px 20px 0;
+  padding: 40px 20px 0;
   height: 100vh;
 }
 
@@ -85,7 +119,6 @@ h2 {
   font-weight: 400;
   line-height: 120%
 }
-
 
 p.text-min {
   font-size: 24px
@@ -317,7 +350,6 @@ footer .panda-social {
 .clear {
   clear: both
 }
-
 
 /* responsive
 *****************************************/

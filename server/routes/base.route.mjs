@@ -13,7 +13,7 @@ export default [{
           const fixtures = await Models.Fixture.find({ matchDay: pool.season.currentMatchDay, season: pool.season._id })
             .populate('homeTeam')
             .populate('awayTeam');
-            poolsMatchday.push(Object.assign(pool.toJSON(), { fixtures: fixtures.map(function (f) { return f.toJSON() }) }))
+          poolsMatchday.push(Object.assign(pool.toJSON(), { fixtures: fixtures.map(function (f) { return f.toJSON() }) }))
         }
         return h.response(poolsMatchday);
       } catch (err) {

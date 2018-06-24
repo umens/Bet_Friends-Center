@@ -242,6 +242,24 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
+"@ngx-progressbar/core@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/core/-/core-5.0.1.tgz#a8566384638512b7e53945a3995ccbd79ce21c31"
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngx-progressbar/http@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/http/-/http-5.0.1.tgz#f8072fe56c3d36619de04ab650bf191e00f275f9"
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngx-progressbar/router@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/router/-/router-5.0.1.tgz#9547b3e6fd2dd81d441818799831c22820faaec6"
+  dependencies:
+    tslib "^1.9.0"
+
 "@schematics/angular@0.6.8":
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.6.8.tgz#a8d1afc33e77160296b0a8b3d02f0ee4dfe9d1d2"
@@ -3989,6 +4007,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash._reinterpolate@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
+
 lodash.assign@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
@@ -4008,6 +4030,19 @@ lodash.mergewith@^4.6.0:
 lodash.tail@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
+
+lodash.template@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.4.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
+  dependencies:
+    lodash._reinterpolate "~3.0.0"
+    lodash.templatesettings "^4.0.0"
+
+lodash.templatesettings@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.templatesettings/-/lodash.templatesettings-4.1.0.tgz#2b4d4e95ba440d915ff08bc899e4553666713316"
+  dependencies:
+    lodash._reinterpolate "~3.0.0"
 
 lodash@^3.8.0:
   version "3.10.1"
@@ -4421,6 +4456,12 @@ neo-async@^2.5.0:
 next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+
+ngx-breadcrumbs@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/ngx-breadcrumbs/-/ngx-breadcrumbs-0.0.3.tgz#cd303a890eb190f8c69be11e408a68f17583e1a5"
+  dependencies:
+    lodash.template "^4.4.0"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -5571,6 +5612,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   resolved "https://registry.yarnpkg.com/run-queue/-/run-queue-1.0.3.tgz#e848396f057d223f24386924618e25694161ec47"
   dependencies:
     aproba "^1.1.1"
+
+rxjs-compat@6:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.2.1.tgz#f5a5e4bd700db414e82aa7cb34e5c9222c6d3756"
 
 rxjs@^6.0.0:
   version "6.2.1"

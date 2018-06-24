@@ -6,6 +6,11 @@ html {
 
 body {
   margin-bottom: 0;
+  padding: 0;
+}
+
+.container-fluid {
+  width: 100%;
 }
 
 button,

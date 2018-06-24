@@ -3,261 +3,340 @@
  * Framework overrides and customization goes here.
  */
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height + 15px */
-  margin-bottom: 60px;
-  padding-top: 4.5rem;
-  background-color: #eff3f6;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
-  background-color: #f9f9f9;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-}
+/*
+Template Name: Upcube - Bootstrap 4 Admin Dashboard
+Author: Themesdesign
+Website: www.themesdesign.in
+File: Main Css File
+*/
 
+/*
+1. General
+2. Loader
+3. Bootstrap Custom
+4. Alerts
+5. Helper
+6. Waves
+7. Print
+8. Demo Only
+9. Buttons
+10. Cards
+11. Pagination
+12. Progressbars
+13. Popovers & Tooltips
+14. Sweet Alert
+15. Nestable
+16. Alertify
+17. Charts
+18. Tables
+19. Rage Slider
+20. Session Timeout
+21. Form Elements
+22. Form Advanced
+23. Form Validation
+24. Form Uploads
+25. Summernote
+26. Calendar
+27. Widgets
+28. Timeline
+29. Invoice
+30. Maps
+31. Account pages
+32. Menu
+33. Responsive
+*/
 
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
+@import "variables";
+@import "general";
+@import "loader";
+@import "bootstrap-custom";
+@import "alerts";
+@import "helper";
+@import "waves";
+@import "print";
+// @import "demo-only";
+@import "buttons";
+@import "card";
+@import "pagination";
+@import "progressbar";
+@import "popover-tooltips";
+@import "sweet-alert";
+@import "nestable";
+@import "alertify";
+@import "charts";
+@import "tables";
+@import "range-slider";
+@import "session-timeout";
+@import "form-elements";
+@import "form-validation";
+@import "form-upload";
+@import "form-advanced";
+@import "form-editor";
+@import "summernote";
+@import "calendar";
+@import "widgets";
+@import "timeline";
+@import "invoice";
+@import "maps";
+@import "account-pages";
+@import "menu";
+@import "responsive";
 
-// body > .container, main.container,
-// body > .container-fluid, main.container-fluid {
-    // padding: 56px 15px 0;
+// /* Sticky footer styles
+// -------------------------------------------------- */
+// html {
+//   position: relative;
+//   min-height: 100%;
+// }
+// body {
+//   /* Margin bottom by footer height + 15px */
+//   margin-bottom: 60px;
+//   padding-top: 4.5rem;
+//   background-color: #eff3f6;
+// }
+// .footer {
+//   position: absolute;
+//   bottom: 0;
+//   width: 100%;
+//   /* Set the fixed height of the footer here */
+//   height: 60px;
+//   line-height: 60px; /* Vertically center the text there */
+//   background-color: #f9f9f9;
+//   border-top: 1px solid rgba(0, 0, 0, 0.05);
 // }
 
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
 
-code {
-  font-size: 80%;
-}
+// /* Custom page CSS
+// -------------------------------------------------- */
+// /* Not required for template or sticky footer method. */
 
-.accordion .card:only-child {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
-}
+// // body > .container, main.container,
+// // body > .container-fluid, main.container-fluid {
+//     // padding: 56px 15px 0;
+// // }
 
-.nav-user {
-  padding: 0;
-  img {
-    height: 36px;
-    width: 36px;
-  }
-}
+// .footer > .container {
+//   padding-right: 15px;
+//   padding-left: 15px;
+// }
 
-/* ==============
-  Bootstrap-custom
-===================*/
+// code {
+//   font-size: 80%;
+// }
 
-// Breacrumb
-.breadcrumb {
-  background-color: transparent;
-  margin-bottom: 15px;
-  margin-top: 5px;
-}
+// .accordion .card:only-child {
+//   border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+// }
 
-//Dropdown
-.dropdown-menu {
-  padding: 4px 0;
-  font-size: 15px;
-  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.08);
-  border-color: $light;
-}
+// .nav-user {
+//   padding: 0;
+//   img {
+//     height: 36px;
+//     width: 36px;
+//   }
+// }
 
-.dropdown-item.active, .dropdown-item:active {
-  color: $dark;
-  text-decoration: none;
-  background-color: $light;
-}
+// /* ==============
+//   Bootstrap-custom
+// ===================*/
 
-.dropdown-item {
-  padding: 6px 1.5rem;
-}
+// // Breacrumb
+// .breadcrumb {
+//   background-color: transparent;
+//   margin-bottom: 15px;
+//   margin-top: 5px;
+// }
 
-.dropdown-menu-lg {
-  width: 270px;
-}
+// //Dropdown
+// .dropdown-menu {
+//   padding: 4px 0;
+//   font-size: 15px;
+//   box-shadow: 0 2px 30px rgba(0, 0, 0, 0.08);
+//   border-color: $light;
+// }
 
+// .dropdown-item.active, .dropdown-item:active {
+//   color: $dark;
+//   text-decoration: none;
+//   background-color: $light;
+// }
 
-//Background color
-.bg-primary {
-  background-color: $primary !important;
-}
+// .dropdown-item {
+//   padding: 6px 1.5rem;
+// }
 
-.bg-success {
-  background-color: $success !important;
-}
-
-.bg-info {
-  background-color: $info !important;
-}
-
-.bg-warning {
-  background-color: $warning !important;
-}
-
-.bg-danger {
-  background-color: $danger !important;
-}
-
-.bg-muted {
-  background-color: $muted !important;
-}
-
-.bg-white {
-  background-color: $white !important;
-}
+// .dropdown-menu-lg {
+//   width: 270px;
+// }
 
 
-//Text Color
-.text-white {
-  color: $white !important;
-}
+// //Background color
+// .bg-primary {
+//   background-color: $primary !important;
+// }
 
-.text-danger {
-  color: $danger !important;
-}
+// .bg-success {
+//   background-color: $success !important;
+// }
 
-.text-muted {
-  color: $muted !important;
-}
+// .bg-info {
+//   background-color: $info !important;
+// }
 
-.text-primary {
-  color: $primary !important;
-}
+// .bg-warning {
+//   background-color: $warning !important;
+// }
 
-.text-warning {
-  color: $warning !important;
-}
+// .bg-danger {
+//   background-color: $danger !important;
+// }
 
-.text-success {
-  color: $success !important;
-}
+// .bg-muted {
+//   background-color: $muted !important;
+// }
 
-.text-info {
-  color: $info !important;
-}
-
-.text-dark {
-  color: $dark !important;
-}
+// .bg-white {
+//   background-color: $white !important;
+// }
 
 
-//Badge
-.badge-default {
-  background-color: $light;
-  color: $dark;
-}
+// //Text Color
+// .text-white {
+//   color: $white !important;
+// }
 
-.badge-primary {
-  background-color: $primary;
-}
+// .text-danger {
+//   color: $danger !important;
+// }
 
-.badge-success {
-  background-color: $success;
-}
+// .text-muted {
+//   color: $muted !important;
+// }
 
-.badge-info {
-  background-color: $info;
-}
+// .text-primary {
+//   color: $primary !important;
+// }
 
-.badge-warning {
-  background-color: $warning;
-}
+// .text-warning {
+//   color: $warning !important;
+// }
 
-.badge-danger {
-  background-color: $danger;
-}
+// .text-success {
+//   color: $success !important;
+// }
 
-.badge-dark {
-  background-color: $dark;
-}
+// .text-info {
+//   color: $info !important;
+// }
 
-/* Navs & Tabs */
-.nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
-  background-color: $primary;
-}
-
-.nav-pills > .active > a > .badge {
-  color: $primary;
-}
-
-/* List Group */
-.list-group-item.active {
-  background-color: $lightgray;
-  border-color: $lightgray;
-  color: $lightdark4;
-  z-index: 2;
-  &:hover {
-    background-color: $lightgray;
-    border-color: $lightgray;
-    color: $lightdark4;
-    z-index: 2;
-    .list-group-item-text {
-      color: $primary;
-    }
-  }
-  &:focus {
-    background-color: $lightgray;
-    border-color: $lightgray;
-    color: $lightdark4;
-    z-index: 2;
-    .list-group-item-text {
-      color: $primary;
-    }
-  }
-  .list-group-item-text {
-    color: $primary;
-  }
-}
-
-.list-group-item {
-  border-radius: 0;
-  padding: 12px 20px;
-  border: 1px solid fade($dark,6%);
-  &:first-child {
-    border-radius: 0;
-    padding: 12px 20px;
-  }
-  &:last-child {
-    border-radius: 0;
-    padding: 12px 20px;
-  }
-}
-
-.list-group-item-heading {
-  font-weight: 300;
-}
-
-.list-group-item.active > .badge {
-  color: $primary;
-}
+// .text-dark {
+//   color: $dark !important;
+// }
 
 
-// Popover
-.popover-header {
-  margin-top: 0;
-}
+// //Badge
+// .badge-default {
+//   background-color: $light;
+//   color: $dark;
+// }
 
-// Blockquote
-.blockquote {
-  font-size: 1.05rem;
-}
+// .badge-primary {
+//   background-color: $primary;
+// }
 
-.profile-dropdown i {
-  font-size: 16px;
-  vertical-align: middle;
-  margin-right: 5px;
-}
+// .badge-success {
+//   background-color: $success;
+// }
+
+// .badge-info {
+//   background-color: $info;
+// }
+
+// .badge-warning {
+//   background-color: $warning;
+// }
+
+// .badge-danger {
+//   background-color: $danger;
+// }
+
+// .badge-dark {
+//   background-color: $dark;
+// }
+
+// /* Navs & Tabs */
+// .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+//   background-color: $primary;
+// }
+
+// .nav-pills > .active > a > .badge {
+//   color: $primary;
+// }
+
+// /* List Group */
+// .list-group-item.active {
+//   background-color: $lightgray;
+//   border-color: $lightgray;
+//   color: $lightdark4;
+//   z-index: 2;
+//   &:hover {
+//     background-color: $lightgray;
+//     border-color: $lightgray;
+//     color: $lightdark4;
+//     z-index: 2;
+//     .list-group-item-text {
+//       color: $primary;
+//     }
+//   }
+//   &:focus {
+//     background-color: $lightgray;
+//     border-color: $lightgray;
+//     color: $lightdark4;
+//     z-index: 2;
+//     .list-group-item-text {
+//       color: $primary;
+//     }
+//   }
+//   .list-group-item-text {
+//     color: $primary;
+//   }
+// }
+
+// .list-group-item {
+//   border-radius: 0;
+//   padding: 12px 20px;
+//   border: 1px solid fade($dark,6%);
+//   &:first-child {
+//     border-radius: 0;
+//     padding: 12px 20px;
+//   }
+//   &:last-child {
+//     border-radius: 0;
+//     padding: 12px 20px;
+//   }
+// }
+
+// .list-group-item-heading {
+//   font-weight: 300;
+// }
+
+// .list-group-item.active > .badge {
+//   color: $primary;
+// }
+
+
+// // Popover
+// .popover-header {
+//   margin-top: 0;
+// }
+
+// // Blockquote
+// .blockquote {
+//   font-size: 1.05rem;
+// }
+
+// .profile-dropdown i {
+//   font-size: 16px;
+//   vertical-align: middle;
+//   margin-right: 5px;
+// }

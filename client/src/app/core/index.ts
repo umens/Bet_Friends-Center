@@ -12,4 +12,3 @@ export * from './route-reusable-strategy';
 export * from './logger.service';
 export * from './notification.service';
 export * from './not-found/not-found.component';
-export * from './login/login.component';

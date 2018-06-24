@@ -28,10 +28,11 @@ export default {
     },
     find: async (request, h) => {
         try {
-            // const query = await Models.Pool.find({
-            //     _id: request.params.id
-            // }).populate('season').exec();
-            const pool = await Models.Pool.findOne({ players: request.auth.credentials._id, _id: request.params.id }).populate('season');
+            const pool = await Models.Pool.findOne({ players: request.auth.credentials._id, _id: request.params.id }).populate({
+                'path': 'season',
+                // Get friends of friends - populate the 'friends' array for every friend
+                populate: { path: 'groups.teams.team' }
+            });
             const fixtures = await Models.Fixture.find({ matchDay: pool.season.currentMatchDay, season: pool.season._id })
                 .populate('homeTeam')
                 .populate('awayTeam');
