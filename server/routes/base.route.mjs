@@ -8,12 +8,24 @@ export default [{
     handler: async (request, h) => {
       try {
         var poolsMatchday = [];
-        const pools = await Models.Pool.find({ players: request.auth.credentials._id, status: { $ne: 'FINNISHED' } }).populate('season');
+        const pools = await Models.Pool.find({
+          players: request.auth.credentials._id,
+          status: {
+            $ne: 'FINNISHED'
+          }
+        }).populate('season');
         for (const pool of pools) {
-          const fixtures = await Models.Fixture.find({ matchDay: pool.season.currentMatchDay, season: pool.season._id })
+          const fixtures = await Models.Fixture.find({
+              matchDay: pool.season.currentMatchDay,
+              season: pool.season._id
+            })
             .populate('homeTeam')
             .populate('awayTeam');
-          poolsMatchday.push(Object.assign(pool.toJSON(), { fixtures: fixtures.map(function (f) { return f.toJSON() }) }))
+          poolsMatchday.push(Object.assign(pool.toJSON(), {
+            fixtures: fixtures.map(function (f) {
+              return f.toJSON()
+            })
+          }))
         }
         return h.response(poolsMatchday);
       } catch (err) {

@@ -149,7 +149,7 @@ const SoccerDataApi = {
               goalsAgainst: groupAPI.goalsAgainst,
               playedGames: groupAPI.playedGames
             };
-            if (season.currentMatchDay < groupsAPI.matchday && season.groups.findIndex(item => item.label === key) != -1) {
+            if (season.currentMatchDay < leagueTable.matchday && season.groups.findIndex(item => item.label === key) != -1) {
               const groupTeamIndex = season.groups.findIndex(item => item.label === key);
               teamGroup.previousRank = await SoccerDataApi.findPreviousTeamRank(season.groups[groupTeamIndex]["teams"], team._id);
             }
@@ -166,8 +166,8 @@ const SoccerDataApi = {
   },
 
   findPreviousTeamRank: async (teams, teamId) => {
-    if (teams.findIndex(item => item.team === teamId) > -1) {
-      return teams[teams.findIndex(item => item.team === teamId)]['rank'];
+    if (teams.findIndex(item => item.team+'' == teamId+'') > -1) { // +'' bugFix because without it the equality is never true even if it is.
+      return teams[teams.findIndex(item =>  item.team+'' == teamId+'')]['rank'];
     }
     else {
       return null;

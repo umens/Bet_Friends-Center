@@ -7,7 +7,7 @@ import { SharedModule } from '../shared';
 import { CoreModule } from '../core';
 import { FixtureComponent } from './fixture/fixture.component';
 import { PoolComponent } from './pool/pool.component';
-import { StandingComponent } from './standing/standing.component';
+import { LeagueStandingComponent } from './league-standing/league-standing.component';
 
 @NgModule({
   imports: [
@@ -20,7 +20,7 @@ import { StandingComponent } from './standing/standing.component';
     HomeComponent,
     FixtureComponent,
     PoolComponent,
-    StandingComponent
+    LeagueStandingComponent
   ]
 })
 export class BetCenterModule { }

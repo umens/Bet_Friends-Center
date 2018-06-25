@@ -5,7 +5,7 @@
 </div>
 <div class="row" [hidden]="isLoading">
   <div class="col">
-    <app-standing [groups]="pool?.season.groups"></app-standing>
+    <app-league-standing [groups]="pool?.season.groups"></app-league-standing>
     <div class="row">
       <div class="col">
         <app-build-column [items]="diplayedFixtures" [gridCols]="2">
